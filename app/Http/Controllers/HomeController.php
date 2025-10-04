@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use DB;
+use Illuminate\Http\Request;
+use App\Models\{Comment,Category, Product, Page, Blog, Faq};
+
+class HomeController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        $categories = Category::where('parent_id',0)->get();
+        $trendingProducts = Product::where('trending',1)->get();
+        $dealProducts = Product::where('deals',1)->get();
+        $page = Page::where('slug','home')->first();
+        return view('welcome',compact('categories','trendingProducts','dealProducts','page'));
+    }
+
+    public function about()
+    {
+        $page = Page::where('slug','about-us')->first();
+        return view('about',compact('page'));
+    }
+
+    public function contact()
+    {
+        $page = Page::where('slug','contact')->first();
+        return view('contact',compact('page'));
+    }
+
+    public function blogs()
+    {
+        $page = Page::where('slug','blogs')->first();
+        $blogs = Blog::all();
+        return view('blogs',compact('page','blogs'));
+    }
+
+    public function membership()
+    {
+        $page = Page::where('slug','membership')->first();
+        return view('membership',compact('page'));
+    }
+
+    public function privacyPolicy()
+    {
+        $page = Page::where('slug','privacy-policy')->first();
+        return view('privacy',compact('page'));
+    }
+
+    public function terms()
+    {
+        $page = Page::where('slug','terms-conditions')->first();
+        return view('terms',compact('page'));
+    }
+
+    public function faq()
+    {
+        $page = Page::where('slug','faq')->first();
+        $faq = Faq::all();
+        return view('faq',compact('page','faq'));
+    }
+
+    public function ourApp()
+    {
+        $page = Page::where('slug','our-app')->first();
+        return view('ourApp',compact('page'));
+    }
+}
