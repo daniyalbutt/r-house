@@ -51,7 +51,7 @@ class Page extends Model
     }
     public function findSection($slug)
     {
-        return $this->sections()->where('slug', $slug)->first()->value;
+        return optional($this->sections()->where('slug', $slug)->first())->value;
     }
 
     public function sluggable(): array

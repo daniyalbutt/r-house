@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
-use App\Models\{Comment,Category, Product, Page, Blog, Faq};
+use App\Models\{Comment,Category, Product, Page, Blog, Faq, Banner};
 
 class HomeController extends Controller
 {
@@ -24,11 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $banners = Banner::where('status',0)->get();
         $categories = Category::where('parent_id',0)->get();
         $trendingProducts = Product::where('trending',1)->get();
         $dealProducts = Product::where('deals',1)->get();
         $page = Page::where('slug','home')->first();
-        return view('welcome',compact('categories','trendingProducts','dealProducts','page'));
+        return view('welcome',compact('categories','trendingProducts','dealProducts','page', 'banners'));
     }
 
     public function about()

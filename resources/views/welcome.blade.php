@@ -1,402 +1,438 @@
 @extends('layouts.app')
 @section('content')
-    <section class="BannerSection">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="productslider">
-                        <div>
-                            <div class="oreoproduct">
-                                <div class="oreotext">
-                                    <span>Quick View</span>
-                                    <h1>OREO Original <br>
-                                        56 Snack Packs</h1>
-                                    <small>(2 Cookies Per Pack)</small>
-                                    <ul class="list-unstyled">
-                                        <li class="first"><img src="{{ asset('front/images/c1.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                        <li class="second"><img src="{{ asset('front/images/c2.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                        <li class="third"><img src="{{ asset('front/images/c3.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                        <li class="last"><img src="{{ asset('front/images/c4.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                    </ul>
-                                    <a href="#" class="morebtn">More</a>
-                                </div>
-                                <img src="{{ asset('front/images/oreo-sd.png') }}" class="img-fluid" alt="">
-                            </div>
-                        </div>
-                        <div>
-                            <div class="oreoproduct">
-                                <div class="oreotext">
-                                    <span>Quick View</span>
-                                    <h1>OREO Original <br>
-                                        56 Snack Packs</h1>
-                                    <small>(2 Cookies Per Pack)</small>
-                                    <ul class="list-unstyled">
-                                        <li class="first"><img src="{{ asset('front/images/c1.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                        <li class="second"><img src="{{ asset('front/images/c2.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                        <li class="third"><img src="{{ asset('front/images/c3.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                        <li class="last"><img src="{{ asset('front/images/c4.png') }}" class="img-fluid"
-                                                alt="">
-                                            <span>$3.50</span>
-                                        </li>
-                                    </ul>
-                                    <a href="#" class="morebtn">More</a>
-                                </div>
-                                <img src="{{ asset('front/images/oreo-sd.png') }}" class="img-fluid" alt="">
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-3">
-                    <div class="newyorkslider">
-                        <div>
-                            <div class="newyorkInner"
-                                style="background: url('{{ asset('front/images/newyork-bg.jpg') }}') no-repeat;background-size: cover;height: 100%;">
-                                <span>Showcase</span>
-                                <h2>New York Strawberry <br>
-                                    Cheesecake Ice Cream</h2>
-                                <small>Lowest Price on Target</small>
-                                <strong> <img src="{{ asset('front/images/newyork-p.png') }}" class="img-fluid"
-                                        alt=""> $299</strong>
-                                <img src="{{ asset('front/images/newyork-inn.png') }}" class="img-fluid" alt="">
-                            </div>
-                        </div>
-                        <div>
-                            <div class="newyorkInner"
-                                style="background: url('{{ asset('front/images/newyork-bg.jpg') }}') no-repeat;background-size: cover;height: 100%;">
-                                <span>Showcase</span>
-                                <h2>New York Strawberry <br>
-                                    Cheesecake Ice Cream</h2>
-                                <small>Lowest Price on Target</small>
-                                <strong> <img src="{{ asset('front/images/newyork-p.png') }}" class="img-fluid"
-                                        alt=""> $299</strong>
-                                <img src="{{ asset('front/images/newyork-inn.png') }}" class="img-fluid" alt="">
-                            </div>
+    <section class="banner home-banner">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                @foreach($banners as $key => $value)
+                <div class="swiper-slide" style="background-image:url('{{ asset($value->image) }}');">
+                    <div class="content">
+                        <div class="express">{{ $value->title }}</div>
+                        <div class="colors">{{ $value->subtitle }}</div>
+                        <div class="bottom-text">{{ $value->description }}</div>
+                        <div class="shape">
+                            <img src="{{ asset('front/images/banner-shape.png') }}" alt="">
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="advertisment-space">
-                        <img src="{{ asset('front/images/ad-sd1.png') }}" class="img-fluid" alt="">
-                        <h4>Advertisement Space Block 2!!!</h4>
-                        <p>If interested in advertising in this place please contact <a href="https://coolbeanzmedia.com/"
-                                target="_blank">Cool Beanz Media LLC</a> for pricing.
-                            At <a href="mailto:coolbeanzmedia@outlook.com" target="_blank">coolbeanzmedia@outlook.com</a>
-                        </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
-            <div class="row">
-                <div class="col-lg-5">
-                    <div class="explore-slider">
-                        <div>
-                            <div class="exploreInner">
-                                <div>
-                                    <h3>Explore the <br>Stores</h3>
-
-                                    <a href="javascript:;" class="visitbtn"> Visit Website</a>
-                                </div>
-                                <img src="{{ asset('front/images/explore-log1.png') }}" class="img-fluid" alt="">
-                            </div>
+            <div class="swiper-button-next home-swiper-button-next"></div>
+            <div class="swiper-button-prev home-swiper-button-prev"></div>
+        </div>
+    </section>
+    
+    @php
+    $categories = \App\Models\Category::where('parent_id', 0)->where('status', 0)->get();
+    $leftCategories = $categories->take(2);
+    $rightCategories = $categories->skip(2);
+    @endphp
+    
+    <section class="categories container">
+        <div class="row">
+            {{-- LEFT COLUMN (first 2 categories) --}}
+            <div class="col-md-6">
+                @foreach($leftCategories as $category)
+                    <div class="img-box mb-4">
+                        <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
+                        <div class="desktop">
+                            <h5>{{ $category->name }}</h5>
                         </div>
-                        <div>
-                            <div class="exploreInner">
-                                <div>
-                                    <h3>Explore the <br>Stores</h3>
-
-                                    <a href="javascript:;" class="visitbtn"> Visit Website</a>
-                                </div>
-                                <img src="{{ asset('front/images/explore-log1.png') }}" class="img-fluid" alt="">
-                            </div>
+                        <div class="overlay">
+                            <h5>{{ $category->name }}</h5>
+                            {!! $category->description !!}
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="fruit-inner"
-                                style="background: url('{{ asset('front/images/fruit-bg.png') }}') no-repeat;">
-                                <h4>Fruit Combination <br>
-                                    of daily juice</h4>
-                                <a href="javascript:;" class="readbtn">Read More <i class="far fa-arrow-right"></i></a>
-                                <span><img src="img/user1.png" class="img-fluid" alt=""> John Doe</span>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="reviewSlider">
-                                <div>
-                                    <div class="reviewBanner">
-                                        <div>
-                                            <div class="reviewinner">
-                                                <img src="img/quote.png" class="img-fluid quotesMain" alt="">
-                                                <p>Sed porttitor arcu libero. Vivamus faucibus vehicula nisi viverra
-                                                    consectetur. Maecenas convallis eros ipsum, at cursus dui malesuada
-                                                    et.</p>
-                                                <img src="img/user12.png" class="img-fluid" alt="">
-                                                <span>James Anderson</span>
-                                            </div>
-                                        </div>
+                @endforeach
+            </div>
+    
+            {{-- RIGHT COLUMN (remaining categories) --}}
+            <div class="col-md-6">
+                <div class="row">
+                    @foreach($rightCategories as $key => $category)
+                        {{-- Make first one full width like your example --}}
+                        @if($loop->first)
+                            <div class="col-12">
+                                <div class="img-box">
+                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
+                                    <div class="desktop">
+                                        <h5>{{ $category->name }}</h5>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="reviewBanner">
-                                        <div>
-                                            <div class="reviewinner">
-                                                <img src="img/quote.png" class="img-fluid quotesMain" alt="">
-                                                <p>Sed porttitor arcu libero. Vivamus faucibus vehicula nisi viverra
-                                                    consectetur. Maecenas convallis eros ipsum, at cursus dui malesuada
-                                                    et.</p>
-                                                <img src="img/user12.png" class="img-fluid" alt="">
-                                                <span>James Anderson</span>
-                                            </div>
-                                        </div>
+                                    <div class="overlay">
+                                        <h5>{{ $category->name }}</h5>
+                                        {!! $category->description !!}
                                     </div>
                                 </div>
                             </div>
+                        @else
+                            <div class="col-6">
+                                <div class="img-box lower-img-box mb-4">
+                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
+                                    <div class="desktop">
+                                        <h5>{{ $category->name }}</h5>
+                                    </div>
+                                    <div class="overlay">
+                                        <h5>{{ $category->name }}</h5>
+                                        {!! $category->description !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="featured-product-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="featured-product">
+                        <div class="featured-image">
+                            <a href="#">
+                                <img src="https://samplelinkweb.site/custom-html/r-house/v2/img/featured-image-1.jpg">
+                                <span class="sold">Sold</span>
+                            </a>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="advert-blockThree">
-                                <img src="{{ asset('front/images/ad-sd1.png') }}" class="img-fluid" alt="">
-                                <h4>Advertisement Space Block 2!!!</h4>
-                                <p>If interested in advertising in this place please contact <a
-                                        href="https://coolbeanzmedia.com/" target="_blank">Cool Beanz Media LLC</a> for
-                                    pricing.
-                                    At <a href="mailto:coolbeanzmedia@outlook.com"
-                                        target="_blank">coolbeanzmedia@outlook.com</a></p>
+                        <div class="featured-content">
+                            <p><a href="#">Hair care</a></p>
+                            <h4><a herf="#">Serum</a></h4>
+                            <h5>$80.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="featured-product">
+                        <div class="featured-image">
+                            <a href="#">
+                                <img src="https://samplelinkweb.site/custom-html/r-house/v2/img/featured-image-2.jpg">
+                                <span class="new">New</span>
+                            </a>
+                        </div>
+                        <div class="featured-content">
+                            <p><a href="#">Hair care</a></p>
+                            <h4><a herf="#">Hair Spray</a></h4>
+                            <h5>$95.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="featured-product">
+                        <div class="featured-image">
+                            <a href="#">
+                                <img src="https://samplelinkweb.site/custom-html/r-house/v2/img/featured-image-3.jpg">
+                            </a>
+                        </div>
+                        <div class="featured-content">
+                            <p><a href="#">Hair tools</a></p>
+                            <h4><a herf="#">Round Brush</a></h4>
+                            <h5>$40.00</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-slide d-none">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Our Products</h2>
+                <img src="{{ asset('front/images/banner-shape.png') }}" alt="Products"/>
+            </div>
+            <div class="product-slider">
+                <button class="prev-btn">
+                    <img src="{{ asset('front/images/arrow-left.png') }}" alt="">
+                </button>
+                <div class="product-slide__wrapper">
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type">
+                                <h5 class="-new">New</h5>
+                            </div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="#">
+                                    <img src="img/product/1.png" alt="Product image"/>
+                                    <img src="img/product/2.png" alt="Product image"/>
+                                </a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">eyes</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">The expert mascaraa</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$35.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type"></div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/2.png" alt="Product image"/><img src="img/product/3.png" alt="Product image"/></a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">eyes</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">Velvet Melon High Intensity</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$38.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type">
+                                <h5 class="-sale">-15%</h5>
+                            </div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/3.png" alt="Product image"/><img src="img/product/4.png" alt="Product image"/></a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">eyes</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">Leather shopper bag</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$30.00</h5>
+                                    <h5 class="product-price--discount">$35.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type"></div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/4.png" alt="Product image"/><img src="img/product/5.png" alt="Product image"/></a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">eyes</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">Luxe jewel lipstick</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$38.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type">
+                                <h5 class="-sale">-50%</h5>
+                            </div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/5.png" alt="Product image"/><img src="img/product/6.png" alt="Product image"/></a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">face</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">Penpoint seamless beauty</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$20.00</h5>
+                                    <h5 class="product-price--discount">$40.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type"></div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/7.png" alt="Product image"/><img src="img/product/8.png" alt="Product image"/></a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">face</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">The Sneaky lips</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$38.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type"></div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/8.png" alt="Product image"/><img src="img/product/9.png" alt="Product image"/></a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">face</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">White Facial Cream</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$38.00</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-slide__item">
+                        <div class="product ">
+                            <div class="product-type"></div>
+                            <div class="product-thumb">
+                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/9.png" alt="Product image"/><img src="img/product/10.png" alt="Product image"/></a>
+                                <div class="product-thumb__actions">
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-content__header">
+                                    <div class="product-category">face</div>
+                                </div>
+                                <a class="product-name" href="product-detail.php">Orange Massage Cream</a>
+                                <div class="product-content__footer">
+                                    <h5 class="product-price--main">$55.00</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <button class="next-btn">
+                    <img src="{{ asset('front/images/arrow-right.png') }}" alt="">
+                </button>
+                <div class="text-center">
+                    <a class="btn btn-theme" href="">View all product</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="story">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="history">
+                        <h5>{{ $page->findSection('history-heading', '') }}</h5>
+                        <h6>{{ $page->findSection('story-heading', '') }}</h6>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>{{ $page->findSection('story-sub-heading', '') }}</h4>
+                    {!! $page->findSection('story-content', '') !!}
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="CategorieSection">
-        <div class="container custom-container">
+    <section class="join-us" style="background-image: url('{{ asset($page->image) }}')">
+        <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="parent-head">
-                        <h2><img src="{{ asset('front/images/cat1.png') }}" class="img-fluid" alt=""> Categories
-                        </h2>
-                        <a href="javascript:;" class="viewbtns">View All</a>
-                    </div>
-
-                    <div class="categorylists">
-                        <ul class="list-unstyled">
-                            @foreach ($categories as $items)
-                                <li><a href="javascript:;"><img src="{{ asset($items->image) }}" class="img-fluid"
-                                            alt="">
-                                        <span>{{ $items->name }}</span></a></li>
-                            @endforeach
-                        </ul>
+                <div class="col">
+                    <div class="banner-2-txt text-center color--white">
+                        <span class="section-id">{!! $page->findSection('join-us-sub-heading', '') !!}</span>
+                        <h2>{!! $page->findSection('join-us-heading', '') !!}</h2>
+                        <a class="btn btn-theme" href="{!! $page->findSection('join-us-button-link', '') !!}">{!! $page->findSection('join-us-button-text', '') !!}</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="TrendingProduct">
-        <div class="container custom-container">
+    <section class="services">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="parent-head">
-                        <h2>Trending Products</h2>
-                        <a href="deals-category.php" class="viewbtns">See all Trending products</a>
+                <!-- Card 1 -->
+                <div class="col-md-4 p-0">
+                    <div class="card-custom">
+                        <a href="{!! $page->findSection('lovely-link', '') !!}">
+                            <h2>{!! $page->findSection('lovely-heading', '') !!}</h2>
+                            <h3>{!! $page->findSection('lovely-sub-heading', '') !!}</h3>
+                            <p>{!! $page->findSection('lovely-content', '') !!}</p>
+                        </a>
                     </div>
                 </div>
-                @foreach ($trendingProducts as $items)
-                    <div class="col-lg-2">
-                        <div class="innproducts">
-                            <figure>
-                                <span>NEW</span>
-                                <img src="{{ asset($items->image) }}" class="img-fluid" alt="">
-                                <a href="javascript:;" class="prodBtn"> <i class="fas fa-plus"></i></a>
-                            </figure>
-                            <h5>Product Title Here</h5>
-                            {!! $items->short_desc !!}
-                            <small>Start From <strong>${{ $items->price }}</strong></small>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <section class="TrendingProduct">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="parent-head">
-                        <h2><img src="{{ asset('front/images/deal1.png') }}" alt=""> Best Deals, Cool Finds</h2>
-                        <a href="deals-category.php" class="viewbtns">See all deals</a>
+                <!-- Card 2 (black background) -->
+                <div class="col-md-4 p-0">
+                    <div class="card-custom middle-card-custom">
+                        <a href="{!! $page->findSection('change-link', '') !!}">
+                            <h2>{!! $page->findSection('change-heading', '') !!}</h2>
+                            <h3>{!! $page->findSection('change-sub-heading', '') !!}</h3>
+                            <p>{!! $page->findSection('change-content', '') !!}</p>
+                        </a>
                     </div>
                 </div>
-                @foreach ($dealProducts as $items)
-                    <div class="col-lg-2">
-                        <div class="innproducts">
-                            <figure>
-                                <span>NEW</span>
-                                <img src="{{ asset($items->image) }}" class="img-fluid" alt="">
-                                <a href="javascript:;" class="prodBtn"> <i class="fas fa-plus"></i></a>
-                            </figure>
-                            <h5>{{ $items->name }}</h5>
-                            {!! $items->short_desc !!}
-                            <small>Start From <strong>$23.90</strong></small>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <section class="TrendingProduct">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="parent-head">
-                        <h2> Frozen Foods</h2>
-                        <a href="deals-category.php" class="viewbtns">See all</a>
-                    </div>
-                </div>
-                @foreach ($trendingProducts as $items)
-                    <div class="col-lg-2">
-                        <div class="innproducts">
-                            <figure>
-                                <span>NEW</span>
-                                <img src="{{ asset($items->image) }}" class="img-fluid" alt="">
-                                <a href="javascript:;" class="prodBtn"> <i class="fas fa-plus"></i></a>
-                            </figure>
-                            <h5>{{ $items->name }}</h5>
-                            {!! $items->short_desc !!}
-                            <small>Start From <strong>${{ $items->price }}</strong></small>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    <section class="AdvertismentSection">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="innadds">
-                        <img src="{{ asset($page->findSection('advertisement-space-block-image')) }}" class="img-fluid"
-                            alt="">
-                        {!! $page->findSection('advertisement-space') !!}
+                <!-- Card 3 -->
+                <div class="col-md-4 p-0">
+                    <div class="card-custom">
+                        <a href="{!! $page->findSection('perfect-link', '') !!}">
+                            <h2>{!! $page->findSection('perfect-heading', '') !!}</h2>
+                            <h3>{!! $page->findSection('perfect-sub-heading', '') !!}</h3>
+                            <p>{!! $page->findSection('perfect-content', '') !!}</p>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section class="TrendingProduct">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="parent-head">
-                        <h2> Fresh Organic Food</h2>
-                        <a href="deals-category.php" class="viewbtns">See all</a>
-                    </div>
-                </div>
-                @foreach ($trendingProducts as $items)
-                    <div class="col-lg-2">
-                        <div class="innproducts">
-                            <figure>
-                                <span>NEW</span>
-                                <img src="{{ asset($items->image) }}" class="img-fluid" alt="">
-                                <a href="javascript:;" class="prodBtn"> <i class="fas fa-plus"></i></a>
-                            </figure>
-                            <h5>{{ $items->name }}</h5>
-                            {!! $items->short_desc !!}
-                            <small>Start From <strong>${{ $items->price }}</strong></small>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <section class="TrendingProduct">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="parent-head">
-                        <h2> Similar Products</h2>
-                        <a href="deals-category.php" class="viewbtns">See all</a>
-                    </div>
-                </div>
-                @foreach ($trendingProducts as $items)
-                    <div class="col-lg-2">
-                        <div class="innproducts">
-                            <figure>
-                                <span>NEW</span>
-                                <img src="{{ asset($items->image) }}" class="img-fluid" alt="">
-                                <a href="javascript:;" class="prodBtn"> <i class="fas fa-plus"></i></a>
-                            </figure>
-                            <h5>{{ $items->name }}</h5>
-                            {!! $items->short_desc !!}
-                            <small>Start From <strong>${{ $items->price }}</strong></small>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-    <section class="AboutBuddy">
-        <div class="container custom-container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="about-txt">
-                        {!! $page->findSection('about-basket') !!}
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="aboutapps">
-                        <ol class="list-unstyled">
-                            <li><a href="javascript:;"><img src="img/appstore.png" class="img-fluid" alt=""></a>
-                            </li>
-                            <li><a href="javascript:;"><img src="img/playstore.png" class="img-fluid"
-                                        alt=""></a></li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="inneraboutbuddy">
-                        <img src="{{ asset('front/images/a1.svg') }}" class="img-fluid" alt="">
-                        {!! $page->findSection('find-products') !!}
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="inneraboutbuddy">
-                        <img src="{{ asset('front/images/a2.svg') }}" class="img-fluid" alt="">
-                        {!! $page->findSection('independent-and-trustworthy') !!}
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="inneraboutbuddy">
-                        <img src="{{ asset('front/images/a3.svg') }}" class="img-fluid" alt="">
-                        {!! $page->findSection('free-to-use') !!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 @endsection

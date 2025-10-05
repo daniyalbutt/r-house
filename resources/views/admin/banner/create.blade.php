@@ -38,20 +38,16 @@
 	                            		<input type="text" name="title" value="{{ $data == null ? old('title') : $data->title }}" class="form-control">
 	                            	</div>
 	                            	<div class="form-group">
+	                            		<label for="">Sub Title</label>
+	                            		<input type="text" name="subtitle" value="{{ $data == null ? old('subtitle') : $data->subtitle }}" class="form-control">
+	                            	</div>
+	                            	<div class="form-group">
 	                            		<label for="">Description</label>
-	                            		<textarea class="editor" id="editor-1" name="description">{!! $data == null ? old('description') : $data->description !!}</textarea>
+	                            		<textarea class="form-control" name="description">{!! $data == null ? old('description') : $data->description !!}</textarea>
 	                            	</div>
 	                            	<div class="form-group">
 	                            		<label for="">Image</label>
 	                            		<input type="file" class="dropify" name="image" {{ $data != null ? 'data-default-file = ' .asset($data->image) : ''}}>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label for="">Button Text</label>
-	                            		<input type="text" name="button" value="{{ $data == null ? old('button') : $data->button }}" class="form-control">
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label for="">Link</label>
-	                            		<input type="text" name="link" value="{{ $data == null ? old('link') : $data->link }}" class="form-control">
 	                            	</div>
 	                            	<div class="form-group">
 	                            		<label for="">Status</label>

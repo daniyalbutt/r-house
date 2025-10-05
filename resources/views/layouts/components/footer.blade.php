@@ -1,99 +1,161 @@
-<footer>
-    <div class="container custom-container subscribeContainer">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="subscribe-letter">
-                    <h2>Subscribe to our newsletter</h2>
-                    <p>We handpick the very best deals, trends and product news - making sure you never miss a thing.
-                    </p>
-                    <form class="subscribeform">
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="newsletter_email"
-                                placeholder="Your email address">
-                            <button type="button" id="newsletter-btn" class="subscribeBtn"><i
-                                    class="far fa-arrow-right"></i></button>
+        <section class="contactSection">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Get in touch</h2>
+                    <img src="{{ asset('front/images/banner-shape.png') }}" alt="Products">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-7 col-xl-8">
+                        <div class="contactForm">
+                            <div id="alert"></div>
+                            <!--Response Holder-->
+                            <form id="angelContactForm" method="post">
+                                <div class="form-group">
+                                    <input type="text" name="contact-form-name" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="contact-form-email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="contact-form-mobile" class="form-control" placeholder="Your Mobile" required>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" name="contact-form-message" placeholder="Your Message" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" id="contact-submit-btn" class="btn btn-theme">send Message</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
+                    <div class="col-md-6 col-lg-5 col-xl-4">
+                        <div class="holdingInfo patternbg">
+                            {!! $helper->contactContent() !!}
+                            <ul>
+                                <li>
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>{!! $helper->companyAddress() !!}</li>
+                                <li>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <a href="tel:{!! $helper->companyNumber() !!}">{!! $helper->companyNumber() !!}</a>
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <a href="mailto:{!! $helper->companyEmail() !!}">{!! $helper->companyEmail() !!}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container custom-container foolinksCOntain">
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="foot-leftOne">
-                    {!! $helper->footerContent() !!}
+        </section>
+
+        <section class="brandArea">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="swiper partnersLogoSlider">
+                            <div class="swiper-wrapper">
+                                <!-- Slide 1 -->
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-1.png" src="img/brand-1.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                                <!-- Slide 2 -->
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-2.png" src="img/brand-2.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                                <!-- Slide 3 -->
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-3.png" src="img/brand-3.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                                <!-- Slide 4 -->
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-4.png" src="img/brand-4.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                                <!-- Repeat slides -->
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-1.png" src="img/brand-1.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-2.png" src="img/brand-2.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-3.png" src="img/brand-3.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="partnersLogo clearfix">
+                                        <img class="lazyestload" data-src="img/brand-4.png" src="img/brand-4.png" alt="Image Partner">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-next swiper-btn">
+                            <img src="{{ asset('front/images/arrow-right.png') }}" alt="Next">
+                        </div>
+                        <div class="swiper-prev swiper-btn">
+                            <img src="{{ asset('front/images/arrow-left.png') }}" alt="Prev">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-2">
-                <div class="footlinks">
-                    <h4>Company</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('about') }}">About Us</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li>
-                        <li><a href="{{ route('blogs') }}">Blogs</a></li>
-                        <li><a href="{{ route('ourApp') }}">Our App</a></li>
-                    </ul>
+        </section>
+        
+        <footer>
+            <a href="#pageTop" class="backToTop"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="footer-content">
+                            <h5><img src="{{ asset($logo) }}"></h5>
+                            {!! $helper->footerContent() !!}
+                            <div class="social-icons">
+                                @if($helper->facebook())
+                                <a href="{{ $helper->facebook() }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                @endif
+                                @if($helper->twitter())
+                                <a href="{{ $helper->twitter() }}" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                                @endif
+                                @if($helper->instagram())
+                                <a href="{{ $helper->instagram() }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                @endif
+                                @if($helper->linkedin())
+                                <a href="{{ $helper->linkedin() }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>CONTACT</h5>
+                        <p>{!! $helper->companyAddress() !!}</p>
+                        <p>{!! $helper->companyEmail() !!}</p>
+                        <p>{!! $helper->companyNumber() !!}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>INFO</h5>
+                        <p>Working Days <span>9AM - 9PM</span></p>
+                        <p>Saturday <span>10AM - 8PM</span></p>
+                        <p>Sunday <span>Closed</span></p>
+                    </div>
+                    <div class="col-md-2 map">
+                        <h5>MAPS</h5>
+                        <img src="{{ asset('front/images/footer-img-2.png') }}" alt="Map">
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-2">
-                <div class="footlinks">
-                    <h4>Learn more</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('membership') }}">Membership</a></li>
-                        <li><a href="{{ route('faq') }}">Frequently Asked Questions</a></li>
-                        <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
-                        <li><a href="{{ route('terms') }}">Terms & Condition</a></li>
-                    </ul>
-                </div>
+            <div class="bottom-bar">
+                {{ $helper->copyright() }}
             </div>
-            <div class="col-lg-3">
-                <div class="footlinks">
-                    <h4>Partners & Advertisers</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="javascript::">Why Basket Buddy?</a></li>
-                        <li><a href="javascript::">Register Your Shop</a></li>
-                        <li><a href="javascript::">Register Your Brand</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<div class="copyright">
-    <div class="container custom-container">
-        <div class="row">
-            <div class="col-lg-6">
-                <p>{{ $helper->copyright() }}</p>
-            </div>
-            <div class="col-lg-6">
-                <ol class="list-unstyled sociallinks">
-                    <li><a href="{{ $helper->facebook() }}"><img src="{{ asset('front/images/icon1.svg') }}"
-                                class="img-fluid" alt=""></a></li>
-                    <li><a href="{{ $helper->twitter() }}"><img src="{{ asset('front/images/icon2.svg') }}"
-                                class="img-fluid" alt=""></a></li>
-                    <li><a href="{{ $helper->instagram() }}"><img src="{{ asset('front/images/icon3.svg') }}"
-                                class="img-fluid" alt=""></a></li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END: Footer -->
-
-<div class="toggle-bottom">
-
-    <ul class="bottomList">
-        <li><a href="javascript"> lore ispum</a></li>
-        <li>
-            <p>No Product Found</p>
-        </li>
-
-    </ul>
-
-    <div class="toggle">
-        <span><img src="{{ asset('front/images/list.svg') }}" class="img-fluid" alt=""> My List <i
-                class="fas fa-chevron-down"></i></span>
-    </div>
-
-</div>
+        </footer>
