@@ -1,7 +1,7 @@
 
 :root {
-  --dark-color: #fd683e;
-  --light-color: #ffd6cb;
+  --dark-color: #C59D5F;
+  --light-color: #c59d5f4a;
 }
 
 @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i|Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
@@ -7740,7 +7740,8 @@ Theme Danger Color
       color: #ffffff;
       background-color: var(--dark-color);
       -webkit-box-shadow: 0 4px 5px 0 rgba(253, 104, 62, 0.5);
-      box-shadow: 0 4px 5px 0 rgba(253, 104, 62, 0.5); }
+      box-shadow: 0 4px 5px 0 #c59d5f4a;
+      }
     .theme-danger.light-skin .sidebar-menu > li.active a > svg {
       color: var(--dark-color);
       fill: rgba(1, 104, 250, 0.2); }

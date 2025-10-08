@@ -12,16 +12,16 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav m-auto">
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="index.php">Home</a>
+                                        <a class="nav-link" href="{{ route('home') }}">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="shop.php">Shop</a>
+                                        <a class="nav-link" href="">Shop</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="about.php">About Us</a>
+                                        <a class="nav-link" href="{{ route('about') }}">About Us</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="contact.php">Contact Us</a>
+                                        <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="join-us.php">Join Us</a>

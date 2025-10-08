@@ -45,7 +45,7 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
-Route::get('blogs', [HomeController::class, 'blogs'])->name('blogs');
+Route::get('shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('our-app', [HomeController::class, 'ourApp'])->name('ourApp');
 Route::get('membership', [HomeController::class, 'membership'])->name('membership');
 Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy');

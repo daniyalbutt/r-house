@@ -234,24 +234,11 @@
                                         <!--/span-->
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="font-weight-700 font-size-16">Product
-                                                    Short Description</label>
-                                                <textarea value={{ $data == null ? old('short_desc') : $data->short_desc }} id="short_desc" name="short_desc"
-                                                    class="editor" required>{{ $data == null ? old('short_desc') : $data->short_desc }}</textarea>
-                                                <span id="short_descerror" class="d-none error-span"></span>
-
-                                            </div>
-                                        </div>
-                                    </div>
                                     <!--/row-->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="font-weight-700 font-size-16">Product
-                                                    Short Description</label>
+                                                <label class="font-weight-700 font-size-16">Product Description</label>
                                                 <textarea value={{ $data == null ? old('description') : $data->description }} id="description" name="description"
                                                     class="editor" required>{{ $data == null ? old('description') : $data->description }}</textarea>
                                                 <span id="descriptionerror" class="d-none error-span"></span>

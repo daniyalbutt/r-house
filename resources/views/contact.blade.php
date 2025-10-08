@@ -1,25 +1,84 @@
 @extends('layouts.app')
 @section('content')
-    <section class="AboutSection">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="sideraBarMain">
-                        <ul class="list-unstyled">
-                            <li><a href="{{ route('about') }}">About us</a></li>
-                            <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                            <li><a href="{{ route('blogs') }}">Blogs</a></li>
-                            <li><a href="{{ route('ourApp') }}">Our App</a></li>
-
+    <section class="inner-banner contact-banner">
+            <div class="breadcrumb mb-0">
+                <div class="container">
+                    
+                </div>
+            </div>
+        </section>
+        
+        <section class="contact-form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul>
+                            <li>
+                                <input type="text" class="form-control" placeholder="First Name">
+                            </li>
+                            <li>
+                                <input type="email" class="form-control" placeholder="E-mail">
+                            </li>
+                            <li>
+                                <input type="text" class="form-control" placeholder="Company">
+                            </li>
+                            <li>
+                                <button class="btn btn-white">SEND</button>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <div class="aboutText">
-                        {!! $page->findSection('contact-us-content') !!}
+            </div>
+        </section>
+
+        <section class="contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="contact-form">
+                            <form>
+                                <div class="input-validator">
+                                    <input type="text" name="name" placeholder="Name"/>
+                                </div>
+                                <div class="input-validator">
+                                    <input type="text" name="email" placeholder="Email"/>
+                                </div>
+                                <div class="input-validator">
+                                    <textarea name="message" id="" cols="30" rows="3" placeholder="Message"></textarea>
+                                </div>
+                                <a class="btn btn-theme" href="">Send Message</a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <h3 class="contact-title">Contact info</h3>
+                        <p class="contact-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo.</p>
+                        <div class="contact-info__item">
+                            <div class="contact-info__item__icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="contact-info__item__detail">
+                                <p>New York, NY</p>
+                            </div>
+                        </div>
+                        <div class="contact-info__item">
+                            <div class="contact-info__item__icon"><i class="fas fa-phone-alt"></i></div>
+                            <div class="contact-info__item__detail">
+                                <p>+11 111 111 111</p>
+                            </div>
+                        </div>
+                        <div class="contact-info__item">
+                            <div class="contact-info__item__icon"><i class="far fa-envelope"></i></div>
+                            <div class="contact-info__item__detail">
+                                <p>info@example.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-info__item">
+                            <div class="contact-info__item__icon"><i class="far fa-clock"></i></div>
+                            <div class="contact-info__item__detail">
+                                <p>Sun-Sat: 8.00am - 9.00.pm</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 @endsection
