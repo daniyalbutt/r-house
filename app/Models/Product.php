@@ -14,7 +14,11 @@ class Product extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $fillable = ['name', 'price', 'category_id', 'image', 'images', 'discount', 'slug', 'short_desc', 'description', 'featured', 'status', 'stock', 'trending', 'deals'];
+    protected $fillable = ['name', 'price', 'category_id', 'image', 'images', 'slug', 'description', 'featured', 'status', 'stock', 'trending', 'extension_type', 'whole_price'];
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 
     /**
      * Get the product images path in json.
@@ -55,4 +59,15 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class,'wishlists');
     }
+
+    public function attributeValueProducts()
+    {
+        return $this->hasMany(AttributeValueProduct::class);
+    }
+
+    public function variationValues()
+    {
+        return $this->hasMany(\App\Models\AttributeValueProduct::class, 'product_id');
+    }
+    
 }

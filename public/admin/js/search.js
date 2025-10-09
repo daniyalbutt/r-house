@@ -43,7 +43,7 @@ $("#search").keyup(function () {
                                  <form action="${baseUrl + '/' + element.id.toString()}" method="POST">
                                     <input type="hidden" name="_token" value="${document.querySelector('meta[name="csrf-token"]').getAttribute("content")}">
                                      <input type="hidden" name="_method" value="DELETE">
-                                     <button type="submit" class="delete">Delete</button>
+                                     <button type="submit" class="delete btn btn-warning btn-sm pr-2 pl-2 py-1">Delete</button>
                                  </form>
                              </li>
                          </ul>

@@ -1,18 +1,18 @@
 @extends('admin.layouts.app')
-@section('title', 'Blog List')
+@section('title', 'Partner List')
 @section('content')
 <div class="container-full">
 	<div class="content-header">
 	    <div class="d-flex align-items-center">
 	        <div class="mr-auto">
-	            <h3 class="page-title">Blog List</h3>
+	            <h3 class="page-title">Partner List</h3>
 	            <div class="d-inline-block align-items-center">
 	                <nav>
 	                    <ol class="breadcrumb">
 	                        <li class="breadcrumb-item">
-	                        	<a href="#"><i class="mdi mdi-home-outline">Blog Management</i></a>
+	                        	<a href="#"><i class="mdi mdi-home-outline">Partner Management</i></a>
 	                        </li>
-	                        <li class="breadcrumb-item active" aria-current="page">Blog List</li>
+	                        <li class="breadcrumb-item active" aria-current="page">Partner List</li>
 	                    </ol>
 	                </nav>
 	            </div>
@@ -23,10 +23,10 @@
 		<div class="card">
 		    <div class="card-header">
 	    		<div class="col-md-6 pl-0">
-	    			<h4 class="card-title">Blog Lists</h4>
+	    			<h4 class="card-title">Partner Lists</h4>
 	    		</div>
 	    		<div class="col-md-6">
-	    			<form method="get" action="{{ route('blogs.index') }}">
+	    			<form method="get" action="{{ route('partners.index') }}">
 		                <div class="input-group">
 		                    <input type="search" id="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" name="search" value="{{ Request::get('search') }}">
 		                    <div class="input-group-append">
@@ -41,7 +41,7 @@
 			@foreach($data as $key => $value)
 			<div class="col-md-12 col-lg-4">
 			    <div class="card">
-			        <img class="card-img-top" src="{{ $value->image != null ? asset($value->image) : asset('admin/image/no-image.jpg') }}" alt="{{ $value->title }}">
+			        <img class="card-img-top" src="{{ $value->logo != null ? asset($value->logo) : asset('admin/image/no-image.jpg') }}" alt="{{ $value->title }}">
 			        <div class="card-body">
 			            <h4 class="card-title">{{ $value->name }}</h4>
 			        </div>
@@ -50,9 +50,9 @@
 			                <span class="badge {{ $value->status == 0 ? 'badge-primary' : 'badge-danger'}} ">{{ $value->status == 0 ? 'Active' : 'Deactive'}}</span>
 			            </ul>
 			            <ul class="list-inline mb-0">
-			                <li><a href="{{ route('blogs.edit', $value->id) }}">Edit</a></li>
+			                <li><a href="{{ route('partners.edit', $value->id) }}">Edit</a></li>
 			                <li>
-			                	<form action="{{ route('blogs.destroy', $value->id) }}" method="POST">
+			                	<form action="{{ route('partners.destroy', $value->id) }}" method="POST">
 			                		@csrf
 			                		@method('DELETE')
 			                		<button type="submit" class="delete btn btn-warning btn-sm pr-2 pl-2 py-1">Delete</button>

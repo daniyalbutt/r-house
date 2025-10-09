@@ -29,8 +29,7 @@ class ProductRequest extends FormRequest
             'featured' => 'boolean',
             'stock' => 'required|numeric',
             'price' => "required|numeric|regex:/^\d+(\.\d{1,2})?$/",
-            'category_id' => 'required|integer',
-            'short_desc' => 'required'
+            'category_id' => 'required|integer'
         ];
         if (request()->isMethod('POST')) {
             $rules['image'] = 'mimes:jpeg,jpg,png,gif,webp|required';

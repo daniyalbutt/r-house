@@ -62,7 +62,7 @@
                                         <form action="{{ route('testimonial.destroy', $value->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="delete">Delete</button>
+                                            <button type="submit" class="delete btn btn-warning btn-sm pr-2 pl-2 py-1">Delete</button>
                                         </form>
                                     </li>
                                 </ul>

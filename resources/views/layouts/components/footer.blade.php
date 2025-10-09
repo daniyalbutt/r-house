@@ -55,51 +55,20 @@
                     <div class="col-sm-12">
                         <div class="swiper partnersLogoSlider">
                             <div class="swiper-wrapper">
-                                <!-- Slide 1 -->
+                                @foreach($partners as $key => $value)
                                 <div class="swiper-slide">
                                     <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-1.png" src="img/brand-1.png" alt="Image Partner">
+                                        <img class="lazyestload" data-src="{{ asset($value->logo) }}" src="{{ asset($value->logo) }}" alt="{{ $value->name }}">
                                     </div>
                                 </div>
-                                <!-- Slide 2 -->
+                                @endforeach
+                                @foreach($partners as $key => $value)
                                 <div class="swiper-slide">
                                     <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-2.png" src="img/brand-2.png" alt="Image Partner">
+                                        <img class="lazyestload" data-src="{{ asset($value->logo) }}" src="{{ asset($value->logo) }}" alt="{{ $value->name }}">
                                     </div>
                                 </div>
-                                <!-- Slide 3 -->
-                                <div class="swiper-slide">
-                                    <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-3.png" src="img/brand-3.png" alt="Image Partner">
-                                    </div>
-                                </div>
-                                <!-- Slide 4 -->
-                                <div class="swiper-slide">
-                                    <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-4.png" src="img/brand-4.png" alt="Image Partner">
-                                    </div>
-                                </div>
-                                <!-- Repeat slides -->
-                                <div class="swiper-slide">
-                                    <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-1.png" src="img/brand-1.png" alt="Image Partner">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-2.png" src="img/brand-2.png" alt="Image Partner">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-3.png" src="img/brand-3.png" alt="Image Partner">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="partnersLogo clearfix">
-                                        <img class="lazyestload" data-src="img/brand-4.png" src="img/brand-4.png" alt="Image Partner">
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="swiper-next swiper-btn">

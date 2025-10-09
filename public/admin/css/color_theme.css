@@ -9339,7 +9339,9 @@ Theme Danger Color
 .theme-danger .select2-container--default.select2-container--open {
   border-color: var(--dark-color); }
 .theme-danger .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: var(--dark-color); }
+  background-color: var(--dark-color);
+  color: white;
+}
 .theme-danger .select2-container--default .select2-search--dropdown .select2-search__field {
   border-color: var(--dark-color) !important; }
 .theme-danger .select2-container--default.select2-container--focus .select2-selection--multiple {

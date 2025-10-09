@@ -89,6 +89,7 @@ var partnerSwiper = new Swiper('.partnersLogoSlider', {
     slidesPerView: 5,
     spaceBetween: 30,
     loop: true,
+    loopedSlides: 10,
     autoplay: {
         delay: 2000,
         disableOnInteraction: false,

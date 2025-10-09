@@ -45,9 +45,8 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
-Route::get('shop', [HomeController::class, 'shop'])->name('shop');
-Route::get('our-app', [HomeController::class, 'ourApp'])->name('ourApp');
-Route::get('membership', [HomeController::class, 'membership'])->name('membership');
+Route::get('shop', [CartController::class, 'shop'])->name('shop');
+Route::get('product/{slug}',[CartController::class, 'detail'])->name('product.details');
 Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy');
 Route::get('faqs', [HomeController::class, 'faq'])->name('faq');
 Route::get('terms-and-conditions', [HomeController::class, 'terms'])->name('terms');
@@ -111,7 +110,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], functio
 
     //Product
     Route::resource('product', ProductController::class);
-
+    Route::post('delete-variation', [ProductController::class, 'deleteVariation'])->name('delete.variation');
+    Route::get('/get-attributes', [ProductController::class, 'attributes'])->name('get.attributes');
     //Order
     Route::resource('order', OrderController::class);
     Route::get('order-detail/{id}', [OrderController::class,'orderDetail'])->name('order_detail');
@@ -143,8 +143,6 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' =>  ['auth', 'is
 });
 
 Route::group(['as' => 'product.'], function () {
-    Route::get('shop', [CartController::class, 'shop'])->name('shop');
-    Route::get('product-detail/{slug}',[CartController::class, 'detail'])->name('detail');
     Route::get('checkout',[CartController::class, 'checkout'])->name('checkout');
     Route::post('payment',[CartController::class, 'payment'])->name('payment');
     Route::get('add-wishlist',[CartController::class,'addWishlist'])->name('Addwishlist');

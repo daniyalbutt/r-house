@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
-use App\Models\{Comment,Category, Product, Page, Blog, Faq, Banner};
+use App\Models\{Comment,Category, Product, Page, Blog, Faq, Banner, Partner};
 
 class HomeController extends Controller
 {
@@ -51,12 +51,6 @@ class HomeController extends Controller
         return view('blogs',compact('page','blogs'));
     }
 
-    public function membership()
-    {
-        $page = Page::where('slug','membership')->first();
-        return view('membership',compact('page'));
-    }
-
     public function privacyPolicy()
     {
         $page = Page::where('slug','privacy-policy')->first();
@@ -76,9 +70,4 @@ class HomeController extends Controller
         return view('faq',compact('page','faq'));
     }
 
-    public function ourApp()
-    {
-        $page = Page::where('slug','our-app')->first();
-        return view('ourApp',compact('page'));
-    }
 }

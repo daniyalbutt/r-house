@@ -12,7 +12,7 @@
                     </div>
                     <div class="box-body pt-0 box-dashboard">
                         <div class="mb-5">
-                            <img class="rounded img-fluid" src="{{ asset($logo) }}" alt="">
+                            <img class="rounded img-fluid" src="{{ asset($logo) }}" alt="" style="width: auto;">
                         </div>
                         <div class="info-content">
                             <h2 class="my-15"><a href="{{ route('home') }}">Welcome to {{ env('APP_NAME') }} </a></h2>

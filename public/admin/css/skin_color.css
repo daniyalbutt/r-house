@@ -942,3 +942,34 @@ body.dark-skin {
   .dropify-wrapper .dropify-message p {
     text-align: center;
 }
+
+
+input::placeholder,
+textarea::placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder { color: #999; opacity: 1; }
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder { color: #999; }
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder { color: #999; }
+
+select:invalid {
+  color: #999;
+}
+
+.form-control::placeholder{
+  color: #999;
+}
+
+.file-drop-zone-title {
+    font-size: 16px !important;
+}
+
+.repeater > button {
+    margin-left: auto;
+    display: block;
+}

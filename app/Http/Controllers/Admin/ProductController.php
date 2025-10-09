@@ -10,6 +10,8 @@ use App\Http\Requests\ProductRequest;
 use DB;
 use File;
 use App\Models\Product;
+use App\Models\Attribute;
+use App\Models\AttributeValueProduct;
 
 class ProductController extends Controller
 {
@@ -66,7 +68,8 @@ class ProductController extends Controller
     public function create()
     {
         $data = null;
-        return view("admin.product.create", compact('data'));
+        $attributes = Attribute::where('status', 0)->get();
+        return view("admin.product.create", compact('data', 'attributes'));
     }
 
     /**
@@ -79,27 +82,53 @@ class ProductController extends Controller
     {
         $request->validated();
         if ($request->hasFile('image')) {
-
             File::isDirectory(public_path('uploads/products')) or File::makeDirectory(public_path('uploads/products'), 0777, true, true);
             $fileName =  time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads/products'), $fileName);
         }
-
         $data = array_merge($request->except(['image', '_token', 'gallery']), ['image' => 'uploads/products/' . $fileName]);
-
         if ($request->hasFile('gallery')) {
             $productImages = [];
             foreach ($request->file('gallery') as $key => $file) {
-
                 $fileName = time() . '_' . strval($key + 1) . '.' . $file->extension();
                 $file->move(public_path('uploads/products'), $fileName);
-
                 array_push($productImages, 'uploads/products/' . $fileName);
             }
             $data = array_merge($data, ['images' => $productImages]);
-    }
+        }
         $product = Product::create($data);
 
+        if (!collect($request->variation)->map(function ($values) {
+            return collect($values)->filter(fn($value) => !is_null($value))->isEmpty();
+        })->contains(false)) {
+            return response()->json(['status' => false, 'message' => 'All values are null or empty.']);
+        } else {
+            if (!empty($request->variation['attrbuite_values'])) {
+                foreach ($request->variation['attrbuite_values'] as $i => $valueName) {
+                    if (!empty($valueName)) {
+                        $attributeId = $request->variation['attrbuite'][$i];
+                        $addon = $request->variation['addon'][$i] ?? 0;
+                        $imagePath = null;
+                        if (!empty($request->variation['image'][$i])) {
+                            File::isDirectory(public_path('uploads/pro-attr'))
+                                || File::makeDirectory(public_path('uploads/pro-attr'), 0777, true, true);
+
+                            $file = $request->variation['image'][$i];
+                            $imgName = time() . uniqid() . '.' . $file->extension();
+                            $file->move(public_path('uploads/pro-attr'), $imgName);
+                            $imagePath = 'uploads/pro-attr/' . $imgName;
+                        }
+                        AttributeValueProduct::create([
+                            'product_id' => $product->id,
+                            'attribute_id' => $attributeId,
+                            'attribute_value' => $valueName,
+                            'addon' => $addon,
+                            'image' => $imagePath,
+                        ]);
+                    }
+                }
+            }
+        }
         return response()->json(['status' => true]);
     }
 
@@ -123,9 +152,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         if (routePermissionGiven('edit product')) {
-
-            $data = Product::find($id);
-            return view('admin.product.create', compact('data'));
+            $data = Product::with('attributeValueProducts.attribute')->find($id);
+            $attributes = Attribute::where('status', 0)->get();
+            return view('admin.product.create', compact('data', 'attributes'));
         }
     }
 
@@ -138,38 +167,69 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-
         $request->validated();
 
-        $product = Product::find($id);
-        $data = $request->except(['image', '_token', 'gallery', '_method']);
+        $product = Product::findOrFail($id);
+        $data = $request->except(['image', '_token', '_method', 'gallery', 'variation']);
 
+        // --- Handle main image ---
         if ($request->hasFile('image')) {
-
             if (File::exists(public_path($product->image))) {
                 File::delete(public_path($product->image));
             }
 
-            File::isDirectory(public_path('uploads/products')) or File::makeDirectory(public_path('uploads/products'), 0777, true, true);
-            $fileName =  time() . '.' . $request->image->extension();
+            File::isDirectory(public_path('uploads/products')) 
+                or File::makeDirectory(public_path('uploads/products'), 0777, true, true);
+
+            $fileName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads/products'), $fileName);
-            $data = array_merge($data, ['image' => 'uploads/products/' . $fileName]);
+            $data['image'] = 'uploads/products/' . $fileName;
         }
+
+        // --- Handle gallery images ---
         if ($request->hasFile('gallery')) {
             $productImages = [];
             foreach ($request->file('gallery') as $key => $file) {
-
-                $fileName = time() . '_' . strval($key + 1) . '.' . $file->extension();
+                $fileName = time() . '_' . ($key + 1) . '.' . $file->extension();
                 $file->move(public_path('uploads/products'), $fileName);
-
-                array_push($productImages, 'uploads/products/' . $fileName);
+                $productImages[] = 'uploads/products/' . $fileName;
             }
-            $data = array_merge($data, ['images' => $productImages]);
+            $data['images'] = $productImages;
         }
 
         $product->update($data);
+
+        if (!empty($request->variation['attrbuite_values'])) {
+            foreach ($request->variation['attrbuite_values'] as $i => $valueName) {
+                if (!empty($valueName)) {
+                    $attributeId = $request->variation['attrbuite'][$i];
+                    $addon = $request->variation['addon'][$i] ?? 0;
+                    $imagePath = null;
+
+                    if (!empty($request->variation['image'][$i])) {
+                        File::isDirectory(public_path('uploads/pro-attr'))
+                            or File::makeDirectory(public_path('uploads/pro-attr'), 0777, true, true);
+
+                        $file = $request->variation['image'][$i];
+                        $imgName = time() . uniqid() . '.' . $file->extension();
+                        $file->move(public_path('uploads/pro-attr'), $imgName);
+                        $imagePath = 'uploads/pro-attr/' . $imgName;
+                    }
+
+                    AttributeValueProduct::create([
+                        'product_id' => $product->id,
+                        'attribute_id' => $attributeId,
+                        'attribute_value' => $valueName,
+                        'addon' => $addon,
+                        'image' => $imagePath,
+                    ]);
+                }
+            }
+        }
+
         return response()->json(['status' => true]);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -216,5 +276,35 @@ class ProductController extends Controller
         }
         $product->update(['images' => $imagesArray]);
         return response()->json(['status' => true]);
+    }
+
+    public function deleteVariation(Request $request)
+    {
+        DB::table('attribute_value_product')->where('id', $request->id)->delete();
+        return response()->json(['status' => true]);
+    }
+
+    public function attributes(Request $request)
+    {
+        $attribute = Attribute::where('status', 0)->get();
+        if ($attribute->isNotEmpty()) {
+            return response()->json(['status' => true, 'data' => $attribute]);
+        } else {
+            return response()->json(['status' => false, 'data' => []]);
+        }
+    }
+
+    public function hasNullValues(array $data): bool
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                if ($this->hasNullValues($value)) {
+                    return true;
+                }
+            } elseif ($value === null || $value === "null") {
+                return true;
+            }
+        }
+        return false;
     }
 }

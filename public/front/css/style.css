@@ -286,6 +286,7 @@ ul.navbar-nav a.nav-link:hover:before{
     height: 100%;
     width: 100%;
     object-fit: cover;
+    height: 300px;
 }
 
 .product-thumb__image img:nth-child(2) {
@@ -294,6 +295,7 @@ ul.navbar-nav a.nav-link:hover:before{
     left: 0;
     transition: 0.2s ease-in-out;
     z-index: 9;
+    opacity: 0;
 }
 
 .product-thumb__actions {
@@ -341,7 +343,7 @@ ul.navbar-nav a.nav-link:hover:before{
 }
 
 .product:hover .product-thumb__image img:nth-child(2) {
-    opacity: 0;
+    opacity: 1;
 }
 
 .product-content__header {
@@ -1570,7 +1572,7 @@ a.navbar-brand {
     color: #111;
 }
 
-.shop-sidebar__section.-categories ul > li a:hover:after {
+.shop-sidebar__section.-categories ul > li a:hover:after, .shop-sidebar__section.-categories ul > li a.active:after {
     left: 0;
 }
 

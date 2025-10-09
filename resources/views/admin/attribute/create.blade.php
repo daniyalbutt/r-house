@@ -62,57 +62,6 @@
                                                     Deactive</option>
                                             </select>
                                         </div>
-                                        <div class="form-group border-primary">
-                                            <h4 class="text-center mb-3">Add New Variations</h4>
-                                            <hr style="width: 75%">
-                                            <div id="repeater">
-                                                <!-- Repeater Items -->
-                                                <div class="items" data-group="attrbiute">
-                                                    <div class="item-content">
-                                                        @if ($data)
-                                                            @foreach ($data->attrValues as $item)
-                                                                <div class="form-group">
-                                                                    <label for="">Attrbuite Value</label>
-                                                                    <div class="class-attr d-flex">
-                                                                        <input disabled type="text"   name="value[]"
-                                                                            class="form-control"
-                                                                            value="{{ $item->name }}">
-                                                                        <button type="button"
-                                                                            onclick="deleteAttribute(this,{{ $item->id }})"
-                                                                            class="waves-effect waves-light btn btn-sm btn-rounded btn-primary-light mb-5">
-                                                                            <i class="ti-trash"></i>
-                                                                            Delete</button>
-                                                                    </div>
-
-                                                                </div>
-                                                            @endforeach
-                                                        @endif
-
-                                                        <div class="form-group">
-                                                            <label for="">Attrbuite Value</label>
-                                                            <div class="class-attr d-flex">
-                                                                <input type="text" name="value[]" class="form-control">
-                                                                <button type="button"
-                                                                    onclick="$(this).parent().parent().remove()"
-                                                                    class="waves-effect waves-light btn btn-sm btn-rounded btn-primary-light mb-5">
-                                                                    <i class="ti-trash"></i>
-                                                                    Delete</button>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="repeater-heading">
-                                                        <button type="button"
-                                                            class="waves-effect waves-light btn btn-danger-light btn-sm btn-rounded repeater-add-btn">
-                                                            <i class="ti-plus"></i>
-                                                            Add
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            
-                                        </div>
                                         <div class="form-group">
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success result" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="progressBar">0%</div>

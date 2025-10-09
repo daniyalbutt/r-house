@@ -3,23 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Schema;
-use App\Http\Controllers\Controller;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
 use File;
 
-use App\Models\{
-        Attribute,
-        AttributeValue
-    };
-
+use App\Models\Partner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
-class AttributeController extends Controller
+class PartnersController extends Controller
 {
 
-    public function removeColumns($columns, $columsToBeRemove)
+     public function removeColumns($columns, $columsToBeRemove)
     {
         foreach ($columsToBeRemove as $value) {
             if (($key = array_search($value, $columns)) !== false) {
@@ -37,24 +33,27 @@ class AttributeController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $data = new Attribute();
+        $data = new Partner();
 
-        if ($search != null) {
-            $query = Attribute::query();
+        if($search != null){
+            $query = Partner::query();
 
             $table = $data->getTable();
 
             $columns = $this->removeColumns(Schema::getColumnListing($table), ['created_at', 'updated_at', 'image', 'id']);
 
-            foreach ($columns as $column) {
+            foreach($columns as $column){
                 $query->orWhere($column, 'LIKE', '%' . $search . '%');
             }
             $data = $query->orderBy('name')->paginate(12);
 
-            if ($request->onChange == true) {
-                return response()->json(['status' => true, 'data' => $data, 'lastPage' => $data->lastPage()]);
+            if($request->onChange == true)
+            {
+                return response()->json(['status' => true, 'data' => $data,'lastPage' => $data->lastPage()]);
             }
-        } else {
+
+        }
+        else{
             $data = $data->paginate(12);
             if ($request->onChange == true) {
                 return response()->json(['status' => true, 'data' => $data, 'lastPage' => $data->lastPage()]);
@@ -62,7 +61,7 @@ class AttributeController extends Controller
         }
 
 
-        return view('admin.attribute.index', compact('data'));
+        return view('admin.partners.index', compact('data'));
     }
 
     /**
@@ -73,7 +72,7 @@ class AttributeController extends Controller
     public function create()
     {
         $data = null;
-        return view('admin.attribute.create', compact('data'));
+        return view('admin.partners.create', compact('data'));
     }
 
     /**
@@ -85,25 +84,22 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|unique:attributes',
-            'status' => 'required|boolean'
-        ]);
-        $request->request->remove('_token', 'value');
-        $data = $request->except('value');
-        $attribute = Attribute::create($data);
+        $this->validate($request, [
+			'name' => 'required',
+			'logo' => 'required'
+		]);
+        $request->request->remove('_token');
+        $data = $request->input();
+        if ($request->hasFile('logo')) {
+            File::isDirectory(public_path('uploads/partner')) or File::makeDirectory(public_path('uploads/partner'), 0777, true, true);
 
-        $attrValues = [];
-        if($request->value != null){
-            foreach ($request->value as $value) {
-                if (!empty($value)) {
-                    array_push($attrValues, new AttributeValue(['name' => $value]));
-                }
-            }
+            $fileName = time().'.'.$request->logo->extension();
+            $request->logo->move(public_path('uploads/partner'), $fileName);
+            $data['logo'] = 'uploads/partner/'.$fileName;
         }
+        Partner::create($data);
 
-        $attribute->attrValues()->saveMany($attrValues);
-        return redirect('admin/attribute/attribute')->with('success', 'Attribute added!');
+        return redirect('admin/partners')->with('success', 'Partner added!');
     }
 
     /**
@@ -115,6 +111,7 @@ class AttributeController extends Controller
      */
     public function show($id)
     {
+
     }
 
     /**
@@ -126,9 +123,9 @@ class AttributeController extends Controller
      */
     public function edit($id)
     {
-        $data = Attribute::findOrFail($id);
+        $data = Partner::findOrFail($id);
 
-        return view('admin.attribute.create', compact('data'));
+        return view('admin.partners.create', compact('data'));
     }
 
     /**
@@ -139,22 +136,28 @@ class AttributeController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, Attribute $attribute)
+    public function update(Request $request, Partner $partner)
     {
+        $this->validate($request, [
+			'name' => 'required',
+			'logo' => 'required'
+		]);
         $request->request->remove('_token');
         $request->request->remove('_method');
         $data = $request->input();
-        $attribute->update($data);
-        $attrValues = [];
-        if($request->value != null){
-            foreach ($request->value as $value) {
-                if (!empty($value)) {
-                    array_push($attrValues, new AttributeValue(['name' => $value]));
-                }
+        if ($request->hasFile('logo')) {
+            File::isDirectory(public_path('uploads/partner')) or File::makeDirectory(public_path('uploads/partner'), 0777, true, true);
+            if (File::exists(public_path($partner->logo))) {
+                File::delete(public_path($partner->logo));
             }
+            $fileName = time().'.'.$request->logo->extension();
+            $request->logo->move(public_path('uploads/partner'), $fileName);
+            $data['logo'] = 'uploads/partner/'.$fileName;
         }
-        $attribute->attrValues()->saveMany($attrValues);
-        return redirect()->back()->with('success', 'Attribute Updated');
+        $partner->update($data);
+        return redirect()->back()->with('success', 'Partner Updated');
+
+
     }
 
     /**
@@ -164,25 +167,20 @@ class AttributeController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(Attribute $attribute)
+    public function destroy(Partner $partner)
     {
 
-        $status = $attribute->status;
-        if ($status == 0) {
-            $attribute->status = 1;
+        $status = $partner->status;
+        if($status == 0){
+            $partner->status = 1;
             $message = 'Deactive';
-        } else {
-            $attribute->status = 0;
+        }else{
+            $partner->status = 0;
             $message = 'Active';
         }
-        $attribute->save();
+        $partner->save();
 
-        return redirect()->back()->with('success', 'Attribute ' . $message);
-    }
+        return redirect()->back()->with('success', 'Partner '.$message);
 
-    public function deleteAttrValue(Request $request){
-        AttributeValue::destroy($request->id);
-
-        return response()->json(['status'=>true,'message'=>'This value is deleted successfuly.']);
     }
 }
