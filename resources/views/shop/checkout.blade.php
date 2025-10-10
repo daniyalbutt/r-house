@@ -1,13 +1,17 @@
     @extends('layouts.app')
     @section('content')
-        <section class="banner">
+    <section class="inner-banner">
+        <div class="breadcrumb">
             <div class="container">
-                <div class="row">
-                    <div class="inner-banner">
-                        <h1 class="banner-title-head">Checkout</h1>
-                    </div>
-                </div>
-        </section>
+                <h2>Checkout</h2>
+                <ul>
+                    <li>Home</li>
+                    <li class="active">Checkout</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
 
 
         <section class="checkout">
@@ -23,7 +27,9 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="row">
-                                    <p>Returning to Customer? <a href="#">Click here to login</a></p>
+                                    <div class="col-lg-12">
+                                        <p>Returning to Customer? <a href="#" class="btn btn-theme">Click here to login</a></p>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group info-section">
                                             <label for="name">First Name*</label>
@@ -90,6 +96,53 @@
                             </div>
 
                             <div class="col-md-4">
+                                <div class="checkout__total">
+                                    <h5 class="checkout-title">Your order</h5>
+                                    <div class="checkout__total__price">
+                                        <h5>Product</h5>
+                                        <table>
+                                            <colgroup>
+                                                <col style="width: 70%"/>
+                                                <col style="width: 30%"/>
+                                            </colgroup>
+                                            <tbody>
+                                                @foreach($cart as $index => $item)
+                                                <tr>
+                                                    <td>
+                                                        <span>{{ $item['quantity'] }} x </span>{{ $item['name'] }}
+                                                        @if(!empty($item['attributes']))
+                                                            <br>
+                                                            @foreach($item['attributes'] as $attr)
+                                                                {{ $attr['value'] }}@if(!$loop->last), @endif
+                                                            @endforeach
+                                                        @endif
+                                                    </td>
+                                                    <td>${{ $item['base_price'] }}<br>+ ${{ $item['addon_total'] }}<br> = ${{ $item['final_price'] }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <div class="checkout__total__price__total-count">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Total</td>
+                                                        <td>${{ number_format($grandTotal, 2) }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="checkout__total__price__payment">
+                                            <label class="checkbox-label" for="payment">
+                                            <input id="payment" type="checkbox" name="payment"/>Cheque payment
+                                            </label>
+                                            <label class="checkbox-label" htmlfor="paypal">
+                                            <input id="paypal" type="checkbox" name="paypal"/>PayPal
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button class="btn -red btn-theme w-100">Place order</button>
+                                </div>
                                 <div class="Your-Order">
                                     <h2 class="text-center">Your Order</h2>
                                     <div class="accordion" id="accordionExample">

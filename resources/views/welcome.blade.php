@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="featured-content">
                                         <p><a href="{{ route('shop', ['category' => $value->category->id]) }}">{{ $value->category->name }}</a></p>
-                                        <h4><a href="{{ route('product.details', $value->slug) }}">Serum</a></h4>
+                                        <h4><a href="{{ route('product.details', $value->slug) }}">{{ $value->name }}</a></h4>
                                         <h5>${{ $value->price }}</h5>
                                     </div>
                                 </div>

@@ -38,6 +38,7 @@ if(swiperEl != null){
     swiperEl.addEventListener('click', (e) => {
         const rect = swiperEl.getBoundingClientRect();
         const middle = rect.left + rect.width / 2;
+        $(".search-box").removeClass('active');
 
         if (e.clientX < middle) {
             swiper.slidePrev(); // Go to previous slide
@@ -191,6 +192,27 @@ var onHoverChangeVideoSrc = function onHoverChangeVideoSrc() {
     });
 };
 
+var openSearchBox = function () {
+    const searchIcon = $(".search-icon");
+    const searchBox = $(".search-box");
+    searchIcon.on("click", function (e) {
+        e.preventDefault();
+        searchBox.addClass("active");
+    });
+    $(document).on("mousedown", function (e) {
+        if (
+            searchBox.hasClass("active") &&
+            !searchBox.is(e.target) &&
+            searchBox.has(e.target).length === 0 &&
+            !$(e.target).closest(".search-icon").length
+        ) {
+            searchBox.removeClass("active");
+        }
+    });
+};
+
+
 $(document).ready(function () {
     onHoverChangeVideoSrc();
+    openSearchBox();
 });

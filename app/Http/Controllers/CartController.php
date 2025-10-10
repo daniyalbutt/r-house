@@ -16,6 +16,13 @@ class CartController extends Controller
 		$page = Page::where('slug','shop')->first();
         $categories = Category::where('status', 0)->get();
 		$query = Product::where('status', 1);
+		if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
 		if ($request->filled('category')) {
 			$query->where('category_id', $request->category);
 		}
@@ -121,7 +128,11 @@ class CartController extends Controller
 
     public function checkout()
     {
-        return view('shop.checkout');
+        $cart = session()->get('cart', []);
+        $subtotal = collect($cart)->sum('subtotal');
+		$tax = $subtotal * 0;
+		$grandTotal = $subtotal + $tax;
+        return view('shop.checkout', compact('cart', 'grandTotal'));
     }
 
 	public function addWishlist(Request $request)

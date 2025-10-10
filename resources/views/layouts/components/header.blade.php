@@ -54,7 +54,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="mkdf-search-opener mkdf-icon-has-hover mkdf-search-opener-svg-path" href="javascript:void(0)">
+                                            <a class="mkdf-search-opener mkdf-icon-has-hover mkdf-search-opener-svg-path search-icon" href="javascript:void(0)">
                                                 <span class="mkdf-search-opener-wrapper">
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18px" height="18px" viewBox="0 0 18 18" enable-background="new 0 0 18 18" xml:space="preserve">
                                                         <path d="M17.24,16.502l-5.789-5.789c0.782-1.044,1.21-2.303,1.21-3.63c0-1.625-0.632-3.152-1.781-4.301s-2.676-1.781-4.3-1.781
@@ -66,8 +66,14 @@
                                                     </svg>
                                                 </span>
                                             </a>
-                                        </li>   
+                                        </li>
                                     </ul>
+                                    <div class="search-box">
+                                        <form action="{{ route('shop') }}" method="GET">
+                                            <input type="text" placeholder="What are you looking for?" name="search" value="{{ request('search') }}">
+                                            <button><img src="{{ asset('front/images/search-icon.png') }}" alt="Search icon"></button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </nav>
