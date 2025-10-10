@@ -83,285 +83,39 @@
         </div>
     </section>
     
-    <section class="featured-product-wrapper">
+    <section class="featured-product-wrapper product-slider">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="featured-product">
-                        <div class="featured-image">
-                            <a href="#">
-                                <img src="https://samplelinkweb.site/custom-html/r-house/v2/img/featured-image-1.jpg">
-                                <span class="sold">Sold</span>
-                            </a>
+                <div class="col-md-12">
+                    <div class="product-slider">
+                        <button class="prev-btn">
+                            <img src="{{ asset('front/images/arrow-left.png') }}" alt="">
+                        </button>
+                        <div class="featured-slide__wrapper">
+                            @foreach($featured as $key => $value)
+                            <div class="product-slide__item">
+                                <div class="featured-product">
+                                    <div class="featured-image">
+                                        <a href="{{ route('product.details', $value->slug) }}">
+                                            <img src="{{ asset($value->image) }}" alt="{{ $value->name }}">
+                                            @if($value->stock == 0)
+                                            <span class="sold">Sold</span>
+                                            @endif
+                                        </a>
+                                    </div>
+                                    <div class="featured-content">
+                                        <p><a href="{{ route('shop', ['category' => $value->category->id]) }}">{{ $value->category->name }}</a></p>
+                                        <h4><a href="{{ route('product.details', $value->slug) }}">Serum</a></h4>
+                                        <h5>${{ $value->price }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
-                        <div class="featured-content">
-                            <p><a href="#">Hair care</a></p>
-                            <h4><a herf="#">Serum</a></h4>
-                            <h5>$80.00</h5>
-                        </div>
+                        <button class="next-btn">
+                            <img src="{{ asset('front/images/arrow-right.png') }}" alt="">
+                        </button>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="featured-product">
-                        <div class="featured-image">
-                            <a href="#">
-                                <img src="https://samplelinkweb.site/custom-html/r-house/v2/img/featured-image-2.jpg">
-                                <span class="new">New</span>
-                            </a>
-                        </div>
-                        <div class="featured-content">
-                            <p><a href="#">Hair care</a></p>
-                            <h4><a herf="#">Hair Spray</a></h4>
-                            <h5>$95.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="featured-product">
-                        <div class="featured-image">
-                            <a href="#">
-                                <img src="https://samplelinkweb.site/custom-html/r-house/v2/img/featured-image-3.jpg">
-                            </a>
-                        </div>
-                        <div class="featured-content">
-                            <p><a href="#">Hair tools</a></p>
-                            <h4><a herf="#">Round Brush</a></h4>
-                            <h5>$40.00</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="product-slide d-none">
-        <div class="container">
-            <div class="section-title text-center">
-                <h2>Our Products</h2>
-                <img src="{{ asset('front/images/banner-shape.png') }}" alt="Products"/>
-            </div>
-            <div class="product-slider">
-                <button class="prev-btn">
-                    <img src="{{ asset('front/images/arrow-left.png') }}" alt="">
-                </button>
-                <div class="product-slide__wrapper">
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type">
-                                <h5 class="-new">New</h5>
-                            </div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="#">
-                                    <img src="img/product/1.png" alt="Product image"/>
-                                    <img src="img/product/2.png" alt="Product image"/>
-                                </a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">eyes</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">The expert mascaraa</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$35.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type"></div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/2.png" alt="Product image"/><img src="img/product/3.png" alt="Product image"/></a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">eyes</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">Velvet Melon High Intensity</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$38.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type">
-                                <h5 class="-sale">-15%</h5>
-                            </div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/3.png" alt="Product image"/><img src="img/product/4.png" alt="Product image"/></a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">eyes</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">Leather shopper bag</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$30.00</h5>
-                                    <h5 class="product-price--discount">$35.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type"></div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/4.png" alt="Product image"/><img src="img/product/5.png" alt="Product image"/></a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">eyes</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">Luxe jewel lipstick</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$38.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type">
-                                <h5 class="-sale">-50%</h5>
-                            </div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/5.png" alt="Product image"/><img src="img/product/6.png" alt="Product image"/></a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">face</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">Penpoint seamless beauty</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$20.00</h5>
-                                    <h5 class="product-price--discount">$40.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type"></div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/7.png" alt="Product image"/><img src="img/product/8.png" alt="Product image"/></a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">face</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">The Sneaky lips</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$38.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type"></div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/8.png" alt="Product image"/><img src="img/product/9.png" alt="Product image"/></a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">face</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">White Facial Cream</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$38.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-slide__item">
-                        <div class="product ">
-                            <div class="product-type"></div>
-                            <div class="product-thumb">
-                                <a class="product-thumb__image" href="product-detail.php"><img src="img/product/9.png" alt="Product image"/><img src="img/product/10.png" alt="Product image"/></a>
-                                <div class="product-thumb__actions">
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-atc" href="#"><i class="fas fa-shopping-bag"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round product-qv" href="#"><i class="fas fa-eye"></i></a>
-                                    </div>
-                                    <div class="product-btn"><a class="btn -white product__actions__item -round" href="#"><i class="fas fa-heart"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="product-content__header">
-                                    <div class="product-category">face</div>
-                                </div>
-                                <a class="product-name" href="product-detail.php">Orange Massage Cream</a>
-                                <div class="product-content__footer">
-                                    <h5 class="product-price--main">$55.00</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="next-btn">
-                    <img src="{{ asset('front/images/arrow-right.png') }}" alt="">
-                </button>
-                <div class="text-center">
-                    <a class="btn btn-theme" href="">View all product</a>
                 </div>
             </div>
         </div>

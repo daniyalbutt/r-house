@@ -84,6 +84,35 @@ $(".product-slider .product-slide__wrapper").slick({
     ]
 });
 
+$(".product-slider .featured-slide__wrapper").slick({
+    dots: false,
+    arrows: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    prevArrow: $(".product-slider .prev-btn"),
+    nextArrow: $(".product-slider .next-btn"),
+    responsive: [
+        {
+            breakpoint: 1170,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 2
+            }
+        }
+    ]
+});
+
 
 var partnerSwiper = new Swiper('.partnersLogoSlider', {
     slidesPerView: 5,

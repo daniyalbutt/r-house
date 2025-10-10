@@ -30,7 +30,7 @@
                                 <div class="form-inline my-2 my-lg-0">
                                     <ul class="right-bar">
                                         <li>
-                                            <a itemprop="url" class="mkdf-header-cart mkdf-header-cart-svg-path" href="">
+                                            <a itemprop="url" class="mkdf-header-cart mkdf-header-cart-svg-path" href="{{ route('cart.index') }}">
                                                 <span class="mkdf-cart-icon">
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="15px" height="20px" viewBox="0 0 15 20" enable-background="new 0 0 15 20" xml:space="preserve">
                                                         <g>
@@ -46,7 +46,11 @@
                                                         </g>
                                                     </svg>
                                                 </span>
-                                                <span class="mkdf-cart-number">0</span>
+                                                @php
+                                                    $cart = session('cart', []);
+                                                    $cartCount = collect($cart)->sum('quantity');
+                                                @endphp
+                                                <span class="mkdf-cart-number">{{ $cartCount }}</span>
                                             </a>
                                         </li>
                                         <li>

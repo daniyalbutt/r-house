@@ -88,57 +88,6 @@
 </script>
 
 <script>
-    $(document).ready(function() {
-        var count = 1;
-        var stock = parseInt($("#input-qty").attr("max"));
-        $(".plus").click(function() {
-            if (count < stock) {
-                count += 1;
-                $(".qty-value").val(count);
-            } else {
-                // Show toastr notification if stock is full
-                toastr.error('Stock is full');
-            }
-        });
-
-
-        $(".minus").click(function() {
-            if (count > 1) {
-                count -= 1;
-                $(".qty-value").val(count)
-            }
-        });
-
-        var input = document.querySelector('.qty-value');
-
-        input.addEventListener('input', function() {
-            var value = input.value;
-
-            value = value.replace(/^0+/, '');
-
-            value = value.replace(/\D/g, '');
-            if (value.length > 3) {
-                value = value.slice(0, 3);
-            }
-            input.value = value;
-        });
-        $(".qty-value").on('input', function() {
-            var value = parseInt($(this).val());
-            if (isNaN(value) || value < 1) {
-                count = 1;
-            } else if (value > stock) {
-                count = stock;
-                toastr.error('Stock is full');
-            } else {
-                count = value;
-            }
-            $(this).val(count);
-        });
-
-    });
-</script>
-
-<script>
     @if (\Session::has('success'))
         $.toast({
             heading: 'Sumbitted',

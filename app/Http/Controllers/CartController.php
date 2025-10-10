@@ -15,7 +15,7 @@ class CartController extends Controller
     {
 		$page = Page::where('slug','shop')->first();
         $categories = Category::where('status', 0)->get();
-		$query = Product::query();
+		$query = Product::where('status', 1);
 		if ($request->filled('category')) {
 			$query->where('category_id', $request->category);
 		}
@@ -95,7 +95,28 @@ class CartController extends Controller
 			->latest()
 			->take(4)
 			->get();
-        return view('shop.product_detail',compact('product', 'relatedProducts'));
+		
+		$attributes = $product->variationValues()
+			->with('attribute')
+			->get()
+			->groupBy(fn($item) => strtolower($item->attribute->slug));
+
+		$colors = $product->variationValues()
+			->whereHas('attribute', fn($q) => $q->where('slug', 'colors'))
+			->select('attribute_value', 'addon')
+			->get()
+			->unique('attribute_value');
+		$lengths = $product->variationValues()
+			->whereHas('attribute', fn($q) => $q->where('slug', 'length'))
+			->select('attribute_value', 'addon')
+			->get()
+			->unique('attribute_value');
+		$weights = $product->variationValues()
+			->whereHas('attribute', fn($q) => $q->where('slug', 'weight'))
+			->select('attribute_value', 'addon')
+			->get()
+			->unique('attribute_value');
+        return view('shop.product_detail',compact('product', 'relatedProducts', 'colors', 'lengths', 'weights', 'attributes'));
     }
 
     public function checkout()
@@ -152,6 +173,108 @@ class CartController extends Controller
 
 		Session::flash('message', 'Your Order has been placed Successfully');	
 	}
+
+	public function addToCart(Request $request, $id){
+		$product = Product::findOrFail($id);
+		if ($product->stock <= 0) {
+			return back()->with('error', 'This product is out of stock.');
+		}
+		$quantity = max(1, (int) $request->input('quantity', 1));
+		$attributes = $request->input('attribute', []);
+		$attributesWithAddon = [];
+	    $addonTotal = 0;
+		foreach ($attributes as $attrName => $attrValue) {
+			$addon = $product->variationValues()
+				->whereHas('attribute', fn($q) => $q->where('slug', $attrName))
+				->where('attribute_value', $attrValue)
+				->value('addon') ?? 0;
+			$attributesWithAddon[] = [
+				'name' => $attrName,
+				'value' => $attrValue,
+				'addon' => (float) $addon,
+			];
+			$addonTotal += (float) $addon;
+		}
+		$finalPrice = $product->price + $addonTotal;
+		$cart = session()->get('cart', []);
+		$cartKey = $id . '-' . md5(json_encode($attributes));
+		if (isset($cart[$cartKey])) {
+			$cart[$cartKey]['quantity'] += $quantity;
+			if ($cart[$cartKey]['quantity'] > $product->stock) {
+				$cart[$cartKey]['quantity'] = $product->stock;
+			}
+		} else {
+			$cart[$cartKey] = [
+				'id' => $product->id,
+				'name' => $product->name,
+				'slug' => $product->slug,
+				'category' => $product->category->name,
+				'category_slug' => $product->category->slug,
+				'image' => $product->image,
+				'base_price' => $product->price,
+				'addon_total' => $addonTotal,
+				'final_price' => $finalPrice,
+				'quantity' => $quantity,
+				'stock' => $product->stock,
+				'attributes' => $attributesWithAddon,
+				'subtotal' => $finalPrice * $quantity,
+			];
+		}
+		$cart[$cartKey]['subtotal'] = $cart[$cartKey]['final_price'] * $cart[$cartKey]['quantity'];
+		session()->put('cart', $cart);
+		return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
+	}
+
+	public function cartIndex(){
+		$cart = session()->get('cart', []);
+		$subtotal = collect($cart)->sum('subtotal');
+		$tax = $subtotal * 0;
+		$grandTotal = $subtotal + $tax;
+		return view('cart', compact('cart', 'subtotal', 'tax', 'grandTotal'));
+	}
+
+	public function cartRemove($index)
+	{
+		$cart = session()->get('cart', []);
+		if (isset($cart[$index])) {
+			unset($cart[$index]);
+			session()->put('cart', array_values($cart));
+		}
+		return back()->with('success', 'Item removed from cart.');
+	}
+
+	public function cartUpdate(Request $request, $index)
+	{
+		$cart = session()->get('cart', []);
+
+		if (!isset($cart[$index])) {
+			if ($request->ajax()) {
+				return response()->json(['error' => 'Item not found'], 404);
+			}
+			return back()->with('error', 'Item not found.');
+		}
+
+		$quantity = max(1, (int) $request->quantity);
+		$cart[$index]['quantity'] = $quantity;
+		$cart[$index]['subtotal'] = $cart[$index]['final_price'] * $quantity;
+
+		session()->put('cart', $cart);
+
+		// Recalculate cart total
+		$cartTotal = collect($cart)->sum('subtotal');
+
+		if ($request->ajax()) {
+			return response()->json([
+				'success' => true,
+				'quantity' => $quantity,
+				'subtotal' => number_format($cart[$index]['subtotal'], 2),
+				'cart_total' => number_format($cartTotal, 2),
+			]);
+		}
+
+		return back()->with('success', 'Cart updated successfully.');
+	}
+
 
  
 }

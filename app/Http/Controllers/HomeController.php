@@ -26,10 +26,11 @@ class HomeController extends Controller
     {
         $banners = Banner::where('status',0)->get();
         $categories = Category::where('parent_id',0)->get();
+        $featured = Product::where('featured', 1)->get();
         $trendingProducts = Product::where('trending',1)->get();
         $dealProducts = Product::where('deals',1)->get();
         $page = Page::where('slug','home')->first();
-        return view('welcome',compact('categories','trendingProducts','dealProducts','page', 'banners'));
+        return view('welcome',compact('categories','trendingProducts','dealProducts','page', 'banners', 'featured'));
     }
 
     public function about()
@@ -61,13 +62,6 @@ class HomeController extends Controller
     {
         $page = Page::where('slug','terms-conditions')->first();
         return view('terms',compact('page'));
-    }
-
-    public function faq()
-    {
-        $page = Page::where('slug','faq')->first();
-        $faq = Faq::all();
-        return view('faq',compact('page','faq'));
     }
 
 }
