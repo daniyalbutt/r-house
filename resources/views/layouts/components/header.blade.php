@@ -24,7 +24,7 @@
                                         <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="join-us.php">Join Us</a>
+                                        <a class="nav-link" href="{{ route('join.us') }}">Join Us</a>
                                     </li>
                                 </ul>
                                 <div class="form-inline my-2 my-lg-0">

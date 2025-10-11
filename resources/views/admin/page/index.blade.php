@@ -43,7 +43,7 @@
 			    <div class="card">
 			        <img class="card-img-top" src="{{ $value->image != null ? asset($value->image) : asset('admin/image/no-image.jpg') }}" alt="{{ $value->title }}">
 			        <div class="card-body">
-			            <h4 class="card-title">{{ $value->name }}</h4>
+			            <h4 class="card-title mb-0">{{ $value->name }}</h4>
 			        </div>
 			        <div class="card-footer justify-content-between d-flex">
 			            <ul class="list-inline mb-0 mr-2">

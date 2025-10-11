@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="inner-banner contact-banner">
-            <div class="breadcrumb mb-0">
+            <div class="breadcrumb mb-0" style="background-image:url('{{ asset($page->image) }}');">
                 <div class="container">
                     
                 </div>
@@ -51,24 +51,24 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">
-                        <h3 class="contact-title">Contact info</h3>
-                        <p class="contact-para">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip commodo.</p>
+                        <h3 class="contact-title">{{ $page->findSection('contact-heading', '') }}</h3>
+                        {!! $page->findSection('contact-content', '') !!}
                         <div class="contact-info__item">
                             <div class="contact-info__item__icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div class="contact-info__item__detail">
-                                <p>New York, NY</p>
+                                <p>{!! $helper->companyAddress() !!}</p>
                             </div>
                         </div>
                         <div class="contact-info__item">
                             <div class="contact-info__item__icon"><i class="fas fa-phone-alt"></i></div>
                             <div class="contact-info__item__detail">
-                                <p>+11 111 111 111</p>
+                                <p>{!! $helper->companyNumber() !!}</p>
                             </div>
                         </div>
                         <div class="contact-info__item">
                             <div class="contact-info__item__icon"><i class="far fa-envelope"></i></div>
                             <div class="contact-info__item__detail">
-                                <p>info@example.com</p>
+                                <p>{!! $helper->companyEmail() !!}</p>
                             </div>
                         </div>
                         <div class="contact-info__item">

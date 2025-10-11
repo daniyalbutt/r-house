@@ -69,7 +69,11 @@
                                         @if ($data)
                                             @foreach ($data->sections as $item)
                                                 <div class="form-group">
-                                                    <label for="{{ $item->slug }}">{{ $item->name }}</label>
+                                                    <label for="{{ $item->slug }}">{{ $item->name }}
+                                                        @if ($data && env('APP_DEBUG'))
+                                                        <span class="btn btn-info btn-xs copy-btn" data-slug="{{ $item->slug }}">{{ $item->slug }}</span>
+                                                        @endif
+                                                    </label>
                                                     @if ($item->type == 'text')
                                                         <input type="text" class="form-control"
                                                             name="section[{{ $item->slug }}]"
@@ -125,6 +129,15 @@
 
 @push('css')
     <style>
+        label {
+            width: 100%;
+        }
+
+        .copy-btn {
+            margin-left: auto;
+            display: inline-block;
+            float: right;
+        }
         .toggle.switch {
             float: right;
             border-radius: 23px;
@@ -185,6 +198,31 @@
 @endpush
 @push('js')
     @if ($data)
+    @push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const slug = this.getAttribute('data-slug');
+                    navigator.clipboard.writeText(slug)
+                        .then(() => {
+                            // Optional: show temporary feedback
+                            this.textContent = 'Copied!';
+                            this.classList.remove('btn-info');
+                            this.classList.add('btn-success');
+                            setTimeout(() => {
+                                this.textContent = slug;
+                                this.classList.remove('btn-success');
+                                this.classList.add('btn-info');
+                            }, 1500);
+                        })
+                        .catch(err => console.error('Failed to copy: ', err));
+                });
+            });
+        });
+        </script>
+        @endpush
+
         <script>
             $('#sectionsave').click(function() {
                 $.ajaxSetup({

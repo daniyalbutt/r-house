@@ -35,14 +35,20 @@ class HomeController extends Controller
 
     public function about()
     {
-        $page = Page::where('slug','about-us')->first();
+        $page = Page::where('slug','about')->first();
         return view('about',compact('page'));
     }
 
     public function contact()
     {
-        $page = Page::where('slug','contact')->first();
+        $page = Page::where('slug','contact-us')->first();
         return view('contact',compact('page'));
+    }
+
+    public function joinUs()
+    {
+        $page = Page::where('slug','join-us')->first();
+        return view('join-us',compact('page'));
     }
 
     public function blogs()

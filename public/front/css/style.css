@@ -2956,3 +2956,15 @@ div#card-errors {
 section.checkout {
     margin-bottom: 60px;
 }
+
+.price-range-inputs {
+    display: flex;
+}
+
+.price-range-inputs input {
+    border-radius: 0;
+    height: 35px;
+    font-size: 14px;
+    padding-left: 15px;
+    margin-bottom: 18px !important;
+}
