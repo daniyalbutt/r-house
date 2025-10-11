@@ -2860,7 +2860,7 @@ label.check-1 {
 }
 
 .checkout__total__price__total-count {
-    padding: 1.875em 0;
+    padding: 30px 0 20px;
     border: 1px solid #e1e1e1;
     border-width: 1px 0;
     margin-bottom: 1.875em;
@@ -2942,3 +2942,17 @@ label.check-1 {
     transform: translateY(-50%);
 }
 
+.info-section input.required {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+div#card-errors {
+    font-size: 14px;
+    padding: 6px 15px;
+}
+
+section.checkout {
+    margin-bottom: 60px;
+}

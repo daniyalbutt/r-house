@@ -80,17 +80,16 @@
                                     </td>
                                     <td class="cart_total_price">
                                         <div class="upper">
-                                            <span>${{ number_format($item['base_price'], 2) }}</span>
+                                            <span>(${{ number_format($item['base_price'], 2) }}</span>
                                             @foreach($item['attributes'] as $attr)
                                                 @if(isset($attr['addon']) && $attr['addon'] > 0)
                                                     <span>+ ${{ number_format($attr['addon'], 2) }}
-                                                @endif
-                                                </span>
+                                                @endif)</span>
                                             @endforeach
-                                            =
+                                            * {{ $item['quantity'] }} =
                                         </div>
                                         <br>
-                                        ${{ number_format($item['final_price'], 2) }}</td>
+                                        <strong class="item-subtotal">${{ number_format($item['final_price'] * $item['quantity'], 2) }}</strong>
                                     <td>
                                         <form method="POST" action="{{ route('cart.remove', $index) }}">
                                             @csrf
@@ -121,15 +120,15 @@
                                     <tbody>
                                         <tr>
                                             <th>Subtotal</th>
-                                            <td>${{ number_format($subtotal, 2) }}</td>
+                                            <td id="cart-subtotal">${{ number_format($subtotal, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <th>Tax</th>
-                                            <td>${{ number_format($tax, 2) }}</td>
+                                            <td id="cart-tax">${{ number_format($tax, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <th>Total</th>
-                                            <td class="final-price">${{ number_format($grandTotal, 2) }}</td>
+                                            <td class="final-price" id="cart-total">${{ number_format($grandTotal, 2) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -176,8 +175,16 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.success) {
                     numberEl.textContent = newQuantity;
+                    // Update subtotal for this item
                     row.querySelector('.item-subtotal').textContent = `$${data.subtotal}`;
+                    // Update cart totals
                     document.getElementById('cart-total').textContent = `$${data.cart_total}`;
+                    if (data.cart_subtotal) {
+                        document.getElementById('cart-subtotal').textContent = `$${data.cart_subtotal}`;
+                    }
+                    if (data.cart_tax) {
+                        document.getElementById('cart-tax').textContent = `$${data.cart_tax}`;
+                    }
                 } else if (data.error) {
                     alert(data.error);
                 }
@@ -202,5 +209,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 </script>
 @endpush

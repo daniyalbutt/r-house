@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\{Category,Product, Page};
+use App\Models\{Category,Product, Page, Order, OrderProduct};
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -129,6 +129,9 @@ class CartController extends Controller
     public function checkout()
     {
         $cart = session()->get('cart', []);
+		if (empty($cart)) {
+			return redirect()->route('home')->with('info', 'Your cart is empty. Please add some products first.');
+		}
         $subtotal = collect($cart)->sum('subtotal');
 		$tax = $subtotal * 0;
 		$grandTotal = $subtotal + $tax;
@@ -143,46 +146,67 @@ class CartController extends Controller
 	}
 
     public function payment(Request $request)
-    {
-		
-			try	{
-				
-				try {
-					Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
-					$customer = \Stripe\Customer::create(array(
-						'email' => $request->email,
-						'name' => $request->first_name,
-						'phone' => $request->phone,
-						'description' => "Client Created From Website",
-						'source'  => $request->stripeToken,
-					));
-				} catch (Exception $e) {
-					return redirect()->back()->with('stripe_error', $e->getMessage());
-				}
-				
-				try {
-					
-					$charge = \Stripe\Charge::create(array(
-						'customer' => $customer->id,
-						'amount'   =>  120,
-						'currency' => 'USD',
-						'description' => "Payment From Website",
-						'metadata' => array("name" => $request->first_name, "email" => $request->email),
-					));
-				} catch (Exception $e) {
-
-					return redirect()->back()->with('stripe_error', $e->getMessage());
-				}
+	{
+		try {
+			Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+			$customer = \Stripe\Customer::create([
+				'email'       => $request->email,
+				'name'        => $request->first_name . ' ' . $request->last_name,
+				'phone'       => $request->phone,
+				'description' => "Client Created From Website",
+				'source'      => $request->stripeToken,
+			]);
+			$cart = session()->get('cart', []);
+			if (empty($cart)) {
+				return back()->with('error', 'Your cart is empty.');
 			}
-			catch (Exception $e) {
-				return redirect()->back()->with('stripe_error', $e->getMessage());
+			$totalAmount = collect($cart)->sum(fn($item) => $item['subtotal']);
+			$stripeAmount = (int) ($totalAmount * 100); // Stripe expects cents
+			$charge = \Stripe\Charge::create([
+				'customer'    => $customer->id,
+				'amount'      => $stripeAmount,
+				'currency'    => 'usd',
+				'description' => "Order Payment - " . $request->first_name,
+				'metadata'    => [
+					'email' => $request->email,
+					'phone' => $request->phone,
+				],
+			]);
+			if ($charge->status !== 'succeeded') {
+				return back()->with('stripe_error', 'Payment failed, please try again.');
 			}
-			
-			$chargeJson = $charge->jsonSerialize();
-	
+			$order = new Order();
+			$order->name = $request->first_name . ' ' . $request->last_name;
+			$order->email = $request->email;
+			$order->phone = $request->phone;
+			$order->zip = $request->zip;
+			$order->country = $request->country;
+			$order->address = $request->address;
+			$order->user_id = auth()->id() ?? null;
+			$order->notes = $request->notes ?? null;
+			$order->payment_token = $charge->id; // Stripe charge ID
+			$order->invoice = Order::generateInvoiceNumber();
+			$order->payment_method = 'stripe';
+			$order->amount = $totalAmount;
+			$order->save();
+			foreach ($cart as $item) {
+				OrderProduct::create([
+					'order_id'   		=> $order->id,
+					'product_id' 		=> $item['id'],
+					'base_price' 		=> $item['base_price'],
+					'variation_price' 	=> $item['addon_total'],
+					'price'      		=> $item['final_price'],
+					'quantity'   		=> $item['quantity'],
+					'attributes' 		=> $item['attributes'],
+				]);
+			}
+			session()->forget('cart');
+			Session::flash('success', 'Your order has been placed successfully!');
+			return redirect()->route('thankyou');
 
-		Session::flash('message', 'Your Order has been placed Successfully');	
+		} catch (Exception $e) {
+			return back()->with('stripe_error', $e->getMessage());
+		}
 	}
 
 	public function addToCart(Request $request, $id){
@@ -257,35 +281,28 @@ class CartController extends Controller
 	public function cartUpdate(Request $request, $index)
 	{
 		$cart = session()->get('cart', []);
-
 		if (!isset($cart[$index])) {
-			if ($request->ajax()) {
-				return response()->json(['error' => 'Item not found'], 404);
-			}
-			return back()->with('error', 'Item not found.');
+			return response()->json(['error' => 'Item not found'], 404);
 		}
-
 		$quantity = max(1, (int) $request->quantity);
 		$cart[$index]['quantity'] = $quantity;
 		$cart[$index]['subtotal'] = $cart[$index]['final_price'] * $quantity;
-
 		session()->put('cart', $cart);
-
-		// Recalculate cart total
-		$cartTotal = collect($cart)->sum('subtotal');
-
-		if ($request->ajax()) {
-			return response()->json([
-				'success' => true,
-				'quantity' => $quantity,
-				'subtotal' => number_format($cart[$index]['subtotal'], 2),
-				'cart_total' => number_format($cartTotal, 2),
-			]);
-		}
-
-		return back()->with('success', 'Cart updated successfully.');
+		$subtotal = collect($cart)->sum('subtotal');
+		$tax = round($subtotal * 0.1, 2); // example tax (10%)
+		$grandTotal = $subtotal + $tax;
+		return response()->json([
+			'success' => true,
+			'quantity' => $quantity,
+			'subtotal' => number_format($cart[$index]['subtotal'], 2),
+			'cart_subtotal' => number_format($subtotal, 2),
+			'cart_tax' => number_format($tax, 2),
+			'cart_total' => number_format($grandTotal, 2),
+		]);
 	}
-
-
+	
+	public function thankyou(){
+		return view('thankyou');
+	}
  
 }

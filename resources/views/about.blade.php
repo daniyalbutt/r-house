@@ -57,4 +57,5 @@
                 </div>
             </div>
         </section>
+    @include('layouts.components.footer-form')
 @endsection

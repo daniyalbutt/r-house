@@ -61,7 +61,7 @@
                     <a href="#" class="dropdown-toggle p-0 text-dark hover-primary ml-md-30 ml-10" data-toggle="dropdown" title="User">
                         <span class="pl-30 d-md-inline-block d-none">Hello,</span>
                         <strong class="d-md-inline-block d-none">{{ Auth::user()->name }}</strong>
-                        <img src="{{ asset(Auth::user()->image)}}" class="user-image rounded-circle avatar bg-white mx-10" alt="{{ Auth::user()->name }}">
+                        <img src="{{ asset(Auth::user()->image ?? 'admin/image/avatar-1.png') }}" class="user-image rounded-circle avatar bg-white mx-10" alt="{{ Auth::user()->name }}">
                     </a>
                     <ul class="dropdown-menu animated flipInX">
                         <li class="user-body">

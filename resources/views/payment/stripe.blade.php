@@ -31,10 +31,12 @@ card.mount('#card-element');
 card.addEventListener('change', function(event) {
     var displayError = document.getElementById('card-errors');
     if (event.error) {
-        $(displayError).show();
+        displayError.classList.add('alert', 'alert-danger');
+        displayError.style.display = 'block';
         displayError.textContent = event.error.message;
     } else {
-        $(displayError).hide();
+        displayError.classList.remove('alert', 'alert-danger');
+        displayError.style.display = 'none';
         displayError.textContent = '';
     }
 });
@@ -89,14 +91,15 @@ function stripeTokenHandler(token) {
 function checkEmptyFileds(){
     var errorCount = 0;
     $('form#order-place').find('.form-control').each(function(){
-      if($(this).prop('required')){
-        if( !$(this).val() ) {
-          $(this).parent().find('.invalid-feedback').addClass('d-block');
-          $(this).parent().find('.invalid-feedback strong').html('Field is Required');
-          errorCount = 1;
+        if($(this).prop('required')){
+            if(!$(this).val()) {
+                $(this).addClass('required');
+                $(this).parent().find('.invalid-feedback').addClass('d-block');
+                $(this).parent().find('.invalid-feedback strong').html('Field is Required');
+                errorCount = 1;
+            }
         }
-      }
     });
     return errorCount;
-    }
+}
 </script>   

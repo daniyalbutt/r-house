@@ -17,11 +17,11 @@
     <link rel="stylesheet" href="{{ asset('admin/css/skin_color.css') }}">
     <style>
         .theme-primary .text-primary {
-            color: #b10c74 !important;
+            color: #C59D5F !important;
         }
         .theme-primary .btn-danger {
-            background-color: #b00971;
-            border-color: #b00971;
+            background-color: #C59D5F;
+            border-color: #C59D5F;
         }
     </style>
 </head>
@@ -67,6 +67,11 @@
                                                 <span class="input-group-text  bg-transparent"><i class="fa-solid fa-lock"></i></span>
                                             </div>
                                             <input type="password" class="form-control pl-15 bg-transparent @error('password') is-invalid @enderror" placeholder="Password" id="password" name="password" required autocomplete="current-password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text bg-transparent toggle-password" style="cursor: pointer;">
+                                                    <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+                                                </span>
+                                            </div>
                                             @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -81,12 +86,6 @@
                                                     <label for="basic_checkbox_1">Remember Me</label>
                                                 </div>
                                             </div>
-                                        <!-- /.col -->
-                                        <!-- <div class="col-6">
-                                            <div class="fog-pwd text-right">
-                                                <a href="javascript:void(0)" class="hover-warning"><i class="ion ion-locked"></i> Forgot pwd?</a><br>
-                                            </div>
-                                        </div>
                                         <!-- /.col -->
                                         <div class="col-12 text-center">
                                           <button type="submit" class="btn btn-danger mt-10">SIGN IN</button>
@@ -103,5 +102,21 @@
     </div>
     <!-- Vendor JS -->
     <script src="{{ asset('admin/js/vendors.min.js') }}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.querySelector('.toggle-password');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('togglePasswordIcon');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Toggle eye / eye-slash icon
+            toggleIcon.classList.toggle('fa-eye');
+            toggleIcon.classList.toggle('fa-eye-slash');
+        });
+    });
+    </script>
 </body>
 </html>

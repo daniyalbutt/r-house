@@ -12445,7 +12445,7 @@ Height property
 .fixed .main-sidebar {
   position: fixed; }
 .fixed .content-wrapper {
-  padding-top: 80px; }
+  padding-top: 30px; }
 .fixed .right-side {
   padding-top: 80px; }
 
@@ -17721,13 +17721,16 @@ time {
     margin-top: -40px;
     text-align: right; }
   .product-text .pro-price {
-    position: absolute;
+    /* position: absolute; */
     text-align: center;
     top: 20px;
     right: 5px;
     margin: 0;
     font-weight: 600;
-    padding: 0 10px; }
+    padding: 0 10px;
+    font-size: 22px;
+    padding-right: 0;
+  }
 
 .product-order.table tbody tr td {
   vertical-align: middle; }
@@ -19540,7 +19543,10 @@ textarea.form-control {
       transition: all .4s linear;
       width: 100%;
       height: auto;
-      border-radius: 10px 10px 0 0; }
+      border-radius: 10px 10px 0 0;
+      height: 280px;
+      object-fit: cover;
+    }
     .fx-element-overlay .fx-card-item .fx-overlay-1 .fx-info {
       text-decoration: none;
       display: inline-block;
@@ -24270,4 +24276,25 @@ span.light-logo img {
 
 li.delete i {
   color: white !important;
+}
+
+.price-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
+.price-wrapper p {
+    padding: 0;
+    margin: 0;
+}
+
+.variation-box p {
+    margin: 1px 0;
+    font-size: 14px;
+}
+
+td.total-price {
+    font-size: 16px;
 }

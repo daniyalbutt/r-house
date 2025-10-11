@@ -52,6 +52,8 @@ Route::get('cart', [CartController::class, 'cartIndex'])->name('cart.index');
 Route::delete('cart/remove/{index}', [CartController::class, 'cartRemove'])->name('cart.remove');
 Route::post('cart/update/{index}', [CartController::class, 'cartUpdate'])->name('cart.update');
 Route::get('checkout',[CartController::class, 'checkout'])->name('checkout.index');
+Route::post('payment',[CartController::class, 'payment'])->name('product.payment');
+Route::post('thankyou',[CartController::class, 'thankyou'])->name('thankyou');
 Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy');
 Route::get('faqs', [HomeController::class, 'faq'])->name('faq');
 Route::get('terms-and-conditions', [HomeController::class, 'terms'])->name('terms');
@@ -148,6 +150,5 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' =>  ['auth', 'is
 });
 
 Route::group(['as' => 'product.'], function () {
-    Route::post('payment',[CartController::class, 'payment'])->name('payment');
     Route::get('add-wishlist',[CartController::class,'addWishlist'])->name('Addwishlist');
 });

@@ -32,7 +32,7 @@
                                         data-page-size="10" role="grid" aria-describedby="productorder_info">
                                         <thead>
                                             <tr role="row">
-                                                <th>S.No</th>
+                                                <th>Invoice</th>
                                                 <th>Customer</th>
                                                 <th>Email</th>
                                                 <th>Amount</th>
@@ -42,7 +42,7 @@
                                         @foreach ($data as $key => $item)
                                             <tbody>
                                                 <tr>
-                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $item->invoice }}</td>
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->email }}</td>
                                                     <td>${{ $item->amount }}</td>
@@ -59,7 +59,7 @@
                                                                 value="{{ $item->id }}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"><i class="ti-trash"></i></button>
+                                                            <button type="submit" class="waves-effect waves-light btn btn-xs btn-danger mb-5"><i class="ti-trash"></i> Delete</button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -128,10 +128,6 @@
 
         tbody form {
             display: contents;
-        }
-
-        button i.ti-trash {
-            color: #5555dd;
         }
 
         form button {

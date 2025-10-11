@@ -27,33 +27,53 @@
                             <div class="d-flex justify-content-between">
                                 <h4 class="box-title">Order Info</h4>
                             </div>
-                            <div class="table-responsive">
+                            <div class="">
                                 <table class="table product-table">
                                     <thead>
-                                        <th>ID</th>
-                                        <th>Product</th>
-                                        <th></th>
-                                        <th>Price</th>
-
-
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Product</th>
+                                            <th>Variation</th>
+                                            <th>QTY</th>
+                                            <th>Price</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data->products as $items)
+                                        @foreach ($data->products as $key => $items)
+                                            @php
+                                                $attributes = json_decode($items->pivot->attributes, true);
+                                            @endphp
                                             <tr>
-                                                <td>{{ $items->id }}</td>
-                                                <td>{{ $items->name }}</td>
-                                                <td class="product-image">
-                                                    <img src="{{ asset($items->image) }}" class="img-fluid" alt="">
+                                                <td>{{ ++$key }}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="{{ asset($items->image) }}" class="img-fluid me-2" alt="" style="width: 60px; height: auto;">
+                                                        <div>
+                                                            <span class="fw-bold ml-3">{{ $items->name }}</span><br>
+                                                            <span class="fw-bold ml-3">{{ $items->category->name }}</span>
+                                                        </div>
+                                                    </div>
                                                 </td>
-                                                <td>{{ $items->pivot->price }}</td>
+                                                <td>
+                                                    <div class="variation-box">
+                                                    @if(!empty($attributes))
+                                                        @foreach($attributes as $key => $attr)
+                                                            <p>{{ ucfirst($attr['name']) }}: {{ $attr['value'] }} 
+                                                            ( +${{ number_format($attr['addon'], 2) }} )</p>
+                                                        @endforeach
+                                                    @endif
+                                                    </div>
+                                                </td>
+                                                <td>{{ $items->pivot->quantity }}</td>
+                                                <td>
+                                                    ${{ $items->pivot->base_price }} + ${{ $items->pivot->variation_price }}<br>
+                                                    = ${{ number_format($items->pivot->price, 2) }}
+                                                </td>
                                             </tr>
                                         @endforeach
                                         <tr>
-                                            <td>&nbsp;</td>
-                                            <td class="total-price"><b>Total Price:</b>
-                                            </td>
-                                            <td class="total-price"><b>${{ $data->amount }}</b>
-                                            </td>
+                                            <td colspan="4" class="text-right total-price"><b>Total Price:</b></td>
+                                            <td class="total-price"><b>${{ number_format($data->amount, 2) }}</b></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -71,25 +91,43 @@
                                 <table class="table shipping-table">
                                     <tbody>
                                         <tr>
-                                            <td>Customer Name</td>
-                                            <td>{{ ucwords($data->name) }}</td>
+                                            <td>Invoice ID</td>
+                                            <td>{{ $data->invoice }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Country</td>
-                                            <td>{{ ucwords($data->country) }}</td>
+                                            <td>Name</td>
+                                            <td>{{ $data->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>{{ $data->email }}</td>
                                         </tr>
                                         <tr>
                                             <td>Phone</td>
                                             <td>{{ $data->phone }}</td>
                                         </tr>
                                         <tr>
+                                            <td>Country</td>
+                                            <td>{{ ucwords($data->country) }}</td>
+                                        </tr>
+                                        <tr>
                                             <td>Address</td>
                                             <td>{{ $data->address }}</td>
                                         </tr>
                                         <tr>
+                                            <td>ZIP</td>
+                                            <td>{{ $data->zip }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment Token</td>
+                                            <td>{{ $data->payment_token }}</td>
+                                        </tr>
+                                        @if($data->notes != null)
+                                        <tr>
                                             <td>Notes</td>
                                             <td>{{ $data->notes }}</td>
                                         </tr>
+                                        @endif
                                         <tr>
                                             <td>Payment Method</td>
                                             <td>{{ $data->payment_method }}</td>
@@ -116,11 +154,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .total-price {
-            position: relative;
-            left: 45rem;
         }
 
         .change-status {
