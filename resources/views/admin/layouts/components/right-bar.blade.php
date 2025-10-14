@@ -26,7 +26,7 @@
                         </div>
                         <div class="box-footer">
                             <div class="d-flex align-items-center justify-content-between">
-                                <h5 class="my-0">6 total orders</h5>
+                                <h5 class="my-0">{{ $total_order }} total orders</h5>
                                 <a href="{{ route('order.index') }}" class="mb-0">View Orders</a>
                             </div>
                         </div>
