@@ -1,1 +1,6 @@
-{"menus":[{"section":"Resources","items":[{"title":"Blogs","url":"\/admin\/blogs","icon":"<i class=\"fa fa-comments\" aria-hidden=\"true\"><\/i>"},{"title":"Faqs","url":"\/admin\/faqs","icon":"<i class=\"fa fa-question-circle\" aria-hidden=\"true\"><\/i>"},{"title":"Partners","url":"\/partners","icon":"<i class=\"fa-solid fa-images\" aria-hidden=\"true\"><\/i>"}]}]}
+{"menus":[{"section":"Resources","items":[
+    {
+        "title":"Partners","url":"\/partners","icon":"<i class=\"fa-solid fa-images\" aria-hidden=\"true\"><\/i>"
+    }]
+}
+]}
