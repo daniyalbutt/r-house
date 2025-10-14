@@ -28,6 +28,5 @@ class Order extends Model
 		}
 		return 'INV-' . $year . '-' . str_pad($number, 6, '0', STR_PAD_LEFT);
 	}
-	
 
 }
