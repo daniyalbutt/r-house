@@ -12,11 +12,10 @@
     <style>
         .myaccount-tab-menu.nav a {
             display: block;
-            padding: 20px;
-            font-size: 16px;
+            padding: 10px 25px;
+            font-size: 14px;
             align-items: center;
             width: 100%;
-            font-weight: bold;
             color: inherit;
             border-radius: 0;
             border: 1px solid #25282a;
@@ -25,20 +24,27 @@
             text-transform: uppercase;
             text-decoration: none;
             transition: 0.5s;
+            font-weight: 600;
+            border-radius: 50px;
         }
 
         .myaccount-tab-menu.nav a.active {
-            background: #ff5900;
+            background: #C59D5F;
             color: white;
         }
 
         section.dashboardSection {
-            padding: 25px 0px;
+            padding: 0;
+            padding-bottom: 60px;
         }
 
         .myaccount-tab-menu.nav a:hover {
-            background: #ff5900;
+            background: #C59D5F;
             color: white;
+        }
+
+        .myaccount-tab-menu.nav a i {
+            margin-right: 2px;
         }
     </style>
     @stack('css')

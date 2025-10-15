@@ -1,7 +1,7 @@
         <header>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 p-0">
                         <nav class="navbar navbar-expand-lg navbar-light p-0">
                             <a class="navbar-brand" href="{{ route('home') }}">
                                 <img src="{{ asset($logo) }}" alt="">
@@ -67,6 +67,18 @@
                                                 </span>
                                             </a>
                                         </li>
+                                        <li>
+                                        @if(Auth::check())
+                                            <a class="mkdf-search-opener mkdf-icon-has-hover mkdf-search-opener-svg-path user-icon" href="{{ route('user.dashboard') }}">
+                                                <i class="fa-solid fa-user"></i>
+                                            </a>
+                                        @else
+                                            <a class="mkdf-search-opener mkdf-icon-has-hover mkdf-search-opener-svg-path user-icon" href="{{ route('signin') }}">
+                                                <i class="fa-solid fa-user"></i>
+                                            </a>
+                                        @endif
+                                        </li>
+
                                     </ul>
                                     <div class="search-box">
                                         <form action="{{ route('shop') }}" method="GET">

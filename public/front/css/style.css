@@ -179,7 +179,7 @@ ul.right-bar li {
     padding: 0px 20px;
 }
 
-ul.right-bar li:first-child {
+ul.right-bar li {
     border-right: 1px solid white;
 }
 
@@ -2967,4 +2967,48 @@ section.checkout {
     font-size: 14px;
     padding-left: 15px;
     margin-bottom: 18px !important;
+}
+
+ul.right-bar li:last-child {
+    border-right: 0;
+    padding-right: 0;
+}
+
+.empty-wishlist i {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.empty-wishlist h5 {
+    font-weight: bold;
+}
+
+.dropify-wrapper .dropify-message p {
+    font-size: 18px;
+}
+
+.myaccount-content input.form-control {
+    height: 44px;
+    background-color: white;
+    border-bottom: 2px solid #C59D5F;
+    border-radius: 0;
+    padding: 12px 15px;
+    font-size: 15px;
+}
+
+.my-account-wrapper label, .my-account-wrapper h5 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.my-account-wrapper .form-group {
+    margin-bottom: 25px;
+}
+
+.my-account-wrapper h5 {
+    margin-bottom: 10px;
+}
+
+.dropify-wrapper {
+    border-bottom: 2px solid #C59D5F !important;
 }

@@ -58,7 +58,7 @@ Route::get('join-us',[HomeController::class, 'joinUs'])->name('join.us');
 Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy');
 Route::get('faqs', [HomeController::class, 'faq'])->name('faq');
 Route::get('terms-and-conditions', [HomeController::class, 'terms'])->name('terms');
-
+Route::get('signin', [HomeController::class, 'signIn'])->name('signin');
 
 //Facebook Login
 Route::get('/redirect', [UserController::class, 'redirectFacebook']);

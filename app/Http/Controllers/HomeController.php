@@ -70,4 +70,8 @@ class HomeController extends Controller
         return view('terms',compact('page'));
     }
 
+    public function signIn(){
+        return view('signin');
+    }
+
 }
