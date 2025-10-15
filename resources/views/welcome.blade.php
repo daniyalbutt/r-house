@@ -32,6 +32,7 @@
             {{-- LEFT COLUMN (first 2 categories) --}}
             <div class="col-md-6">
                 @foreach($leftCategories as $category)
+                <a href="{{ route('shop', ['category' => $category->id ]) }}">
                     <div class="img-box mb-4">
                         <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
                         <div class="desktop">
@@ -42,6 +43,7 @@
                             {!! $category->description !!}
                         </div>
                     </div>
+                </a>
                 @endforeach
             </div>
     
@@ -52,29 +54,33 @@
                         {{-- Make first one full width like your example --}}
                         @if($loop->first)
                             <div class="col-12">
-                                <div class="img-box">
-                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
-                                    <div class="desktop">
-                                        <h5>{{ $category->name }}</h5>
+                                <a href="{{ route('shop', ['category' => $category->id ]) }}">
+                                    <div class="img-box">
+                                        <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
+                                        <div class="desktop">
+                                            <h5>{{ $category->name }}</h5>
+                                        </div>
+                                        <div class="overlay">
+                                            <h5>{{ $category->name }}</h5>
+                                            {!! $category->description !!}
+                                        </div>
                                     </div>
-                                    <div class="overlay">
-                                        <h5>{{ $category->name }}</h5>
-                                        {!! $category->description !!}
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         @else
                             <div class="col-6">
-                                <div class="img-box lower-img-box mb-4">
-                                    <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
-                                    <div class="desktop">
-                                        <h5>{{ $category->name }}</h5>
+                                <a href="{{ route('shop', ['category' => $category->id ]) }}">
+                                    <div class="img-box lower-img-box mb-4">
+                                        <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
+                                        <div class="desktop">
+                                            <h5>{{ $category->name }}</h5>
+                                        </div>
+                                        <div class="overlay">
+                                            <h5>{{ $category->name }}</h5>
+                                            {!! $category->description !!}
+                                        </div>
                                     </div>
-                                    <div class="overlay">
-                                        <h5>{{ $category->name }}</h5>
-                                        {!! $category->description !!}
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         @endif
                     @endforeach
