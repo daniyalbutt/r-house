@@ -14,7 +14,7 @@
             <h3 class="mb-3">Thank you for your purchase!</h3>
             @if($order)
                 <p class="mb-4">
-                    Your order <strong>#{{ $order->order_number ?? $order->id }}</strong> has been successfully placed.
+                    Your order <strong>#{{ $order->invoice ?? $order->id }}</strong> has been successfully placed.
                 </p>
             @else
                 <p class="mb-4">

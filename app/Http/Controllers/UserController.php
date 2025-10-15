@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Socialite, Auth;
-use App\Models\{User, Comment, Bid, Product, Order};
+use App\Models\{User, Comment, Bid, Product, Order, OrderProduct};
 use Hash, File;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Classes\Party;
+use Illuminate\Support\Str;
+use App\Helpers\Frontend\Helper;
+
 class UserController extends Controller
 {
     private $include;
@@ -42,35 +46,77 @@ class UserController extends Controller
 
     public function orderHistory()
     {
-        $order = Order::where('user_id',Auth::user()->id)->get();
+        $order = Order::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get();
         return view('user.include.order_history',compact('order'));
     }
 
     public function generateInvoice($id)
     {
-        $order = Order::find($id);
+        $order = Order::findOrFail($id);
+
         $customer = new Buyer([
-            'name'          => $order->name,
+            'name' => $order->name,
             'custom_fields' => [
-            'email' => $order->email,
-            'phone' => $order->phone,
-            'address' => $order->address
+                'Email'   => $order->email,
+                'Phone'   => $order->phone,
+                'Address' => $order->address . ', ' . $order->town . ', ' . $order->country . ' - ' . $order->zip,
             ],
-            ]);
-            
-            $item = [];
-            foreach($order->products as $items){
-            $item = (new InvoiceItem())->title($items->name)->pricePerUnit($order->amount);
-            }            
-            $invoice = Invoice::make()
+        ]);
+
+        $orderProducts = OrderProduct::where('order_id', $order->id)->get();
+        $items = [];
+
+        foreach ($orderProducts as $product) {
+            $attributes = $product->attributes;
+            if (is_string($attributes)) {
+                $attributes = json_decode($attributes, true);
+            }
+
+            $attrText = '';
+            if (!empty($attributes) && is_array($attributes)) {
+                $attrParts = [];
+                foreach ($attributes as $attr) {
+                    $attrParts[] = ucfirst($attr['name']) . ': ' . $attr['value'] . ' + $' . $attr['addon'];
+                }
+                $attrText = ' (' . implode(', ', $attrParts) . ')';
+            }
+
+            $items[] = (new InvoiceItem())
+                ->title($product->product->name . $attrText)
+                ->pricePerUnit($product->price)
+                ->quantity($product->quantity);
+        }
+        $helper = new Helper;
+
+        $seller = new Party([
+            'name' => config('app.name', 'Your Store Name'),
+            'phone' => $helper->companyNumber(),
+            'custom_fields' => [
+                'Website' => url('/'),
+                'Support' => $helper->companyEmail(),
+            ],
+        ]);
+
+        $numericInvoiceId = (int) filter_var(Str::replace('-', '', $order->invoice), FILTER_SANITIZE_NUMBER_INT);
+
+        $invoice = Invoice::make()
+            ->seller($seller)
             ->buyer($customer)
-            ->discountByPercent(0)
-            ->shipping(0)
-            ->currencyCode('usd')
+            ->series('INV')
+            ->sequence($numericInvoiceId)
+            ->filename('invoice-' . $order->invoice)
+            ->date($order->created_at)
+            ->payUntilDays(0)
+            ->dateFormat('F j, Y')
             ->currencySymbol('$')
-            ->addItem($item);
-            
-            return $invoice->stream();
+            ->currencyCode('USD')
+            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->addItems($items)
+            ->notes("Payment Method: " . ucfirst($order->payment_method))
+            ->logo(public_path('uploads/logo.png'))
+            ->totalAmount($order->amount);
+
+        return $invoice->stream();
     }
 
     public function accountUpdate(Request $request)

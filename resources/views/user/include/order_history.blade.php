@@ -35,29 +35,37 @@
                                     <div class="tab-pane fade show active" id="dashboad">
                                         <div class="myaccount-content">
                                             <div class="section-heading">
-                                                <table class="table table-bordered table-striped">
-                                                    <thead class="thead-light">
-                                                        <tr>
-                                                            <th>S.No</th>
-                                                            <th>Customer Name</th>
-                                                            <th>Invoice Number</th>
-                                                            <th>Total</th>
-                                                            <th>View Invoice</th>
+                                                <table class="table table-hover align-middle shadow-sm border rounded-3">
+                                                    <thead class="bg-light text-uppercase">
+                                                        <tr class="text-secondary">
+                                                            <th scope="col" style="width: 5%">#</th>
+                                                            <th scope="col">Invoice Number</th>
+                                                            <th scope="col">Total</th>
+                                                            <th scope="col" class="text-center">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($order as $key => $items)
+                                                        @forelse ($order as $key => $items)
                                                             <tr>
                                                                 <td>{{ $key + 1 }}</td>
-                                                                <td>{{ $items->name }}</td>
-                                                                <td>{{ $items->invoice }}</td>
-                                                                <td>${{ $items->amount }}</td>
-                                                                <td><a href="{{ route('user.generateinvoice', $items->id) }}"
-                                                                        class="btn view-invoice" data-toggle="tooltip"
-                                                                        data-original-title="Invoice">View</a>
+                                                                <td>
+                                                                    <span class="fw-semibold text-dark">{{ $items->invoice }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="fw-bold text-success">${{ number_format($items->amount, 2) }}</span>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a href="{{ route('user.generateinvoice', $items->id) }}" 
+                                                                    class="btn btn-theme">View</a>
                                                                 </td>
                                                             </tr>
-                                                        @endforeach
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="4" class="text-center text-muted py-4">
+                                                                    <i class="fa fa-info-circle me-2"></i> No orders found.
+                                                                </td>
+                                                            </tr>
+                                                        @endforelse
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -75,3 +83,35 @@
     </div>
 </section>
 @endsection
+@push('css')
+<style>
+    .btn-theme {
+        padding: 0px 15px;
+        font-size: 18px;
+    }
+    
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: 15px;
+    }
+
+    .table thead {
+        background-color: #f8f9fa;
+    }
+
+    .table th {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f5ff;
+        transition: 0.3s;
+    }
+
+    .view-invoice {
+        font-size: 0.9rem;
+    }
+</style>
+@endpush

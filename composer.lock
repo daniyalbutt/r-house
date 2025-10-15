@@ -2181,12 +2181,12 @@
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "LaravelDaily\\Invoices\\InvoiceServiceProvider"
-                    ],
                     "aliases": {
                         "Invoice": "LaravelDaily\\Invoices\\Facades\\Invoice"
-                    }
+                    },
+                    "providers": [
+                        "LaravelDaily\\Invoices\\InvoiceServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -10063,6 +10063,6 @@
     "platform": {
         "php": "^7.3|^8.0"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

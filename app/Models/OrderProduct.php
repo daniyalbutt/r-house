@@ -13,4 +13,10 @@ class OrderProduct extends Model
         'attributes' => 'array',
     ];
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+
 }
