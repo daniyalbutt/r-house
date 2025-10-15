@@ -151,7 +151,7 @@ class CartController extends Controller
 			Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 			$customer = \Stripe\Customer::create([
 				'email'       => $request->email,
-				'name'        => $request->first_name . ' ' . $request->last_name,
+				'name'        => $request->first_name,
 				'phone'       => $request->phone,
 				'description' => "Client Created From Website",
 				'source'      => $request->stripeToken,
@@ -176,12 +176,13 @@ class CartController extends Controller
 				return back()->with('stripe_error', 'Payment failed, please try again.');
 			}
 			$order = new Order();
-			$order->name = $request->first_name . ' ' . $request->last_name;
+			$order->name = $request->first_name;
 			$order->email = $request->email;
 			$order->phone = $request->phone;
 			$order->zip = $request->zip;
 			$order->country = $request->country;
 			$order->address = $request->address;
+			$order->town = $request->town;
 			$order->user_id = auth()->id() ?? null;
 			$order->notes = $request->notes ?? null;
 			$order->payment_token = $charge->id; // Stripe charge ID
@@ -301,8 +302,23 @@ class CartController extends Controller
 		]);
 	}
 	
-	public function thankyou(){
-		return view('thankyou');
+	public function thankyou()
+	{
+		$order = null;
+
+		if (auth()->check()) {
+			// Get the latest order of the logged-in user
+			$order = auth()->user()->orders()->latest()->first();
+		} else {
+			// For guest users, check if order ID exists in session
+			$orderId = session('order_id');
+			if ($orderId) {
+				$order = \App\Models\Order::find($orderId);
+			}
+		}
+
+		return view('thankyou', compact('order'));
 	}
+
  
 }
