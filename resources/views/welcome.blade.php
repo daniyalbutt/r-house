@@ -93,6 +93,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="section-title text-center white-color">
+                        <h2>Our Products</h2>
+                        <img src="{{ asset('front/images/banner-shape.png') }}" alt="Products">
+                    </div>
                     <div class="product-slider">
                         <button class="prev-btn">
                             <img src="{{ asset('front/images/arrow-left.png') }}" alt="">
